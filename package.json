@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --port 4200",
+    "build": "ng build --port 4200",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:hr_management_front_end": "node dist/hr_management_front_end/server/server.mjs"

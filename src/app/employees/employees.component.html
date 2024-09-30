@@ -1,0 +1,96 @@
+<style>
+    .intro-section {
+      text-align: center;
+      padding: 20px;
+    }
+  
+    .search-box {
+      display: flex;
+      align-items: space-between;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .department {
+      width: 16vw;
+    }
+    .search-input {
+      background-color: transparent;
+      width: 28vw;
+    }
+    .form-control {
+      background-color: transparent;
+      padding: 12px;
+      font-size: 14px;
+      margin-bottom: 1rem;
+      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+    }
+  
+    .form-control::placeholder {
+      color: hsl(0, 0%, 0%);
+    }
+  
+    .sidebar {
+      background-color: #f5f5f5;
+    }
+  </style>
+  <div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
+            <app-header></app-header>
+        </div>
+        <div class="col py-3">
+          <div class="intro-section">
+            <h1>Employee List</h1>
+            <p>List all employees</p>
+          </div>
+          <div class="search-box">
+            <input
+              type="text"
+              class="form-control search-input"
+              placeholder="Search by name, role, department..."
+            />
+            <select class="form-control form-select department">
+              <option selected>All Department</option>
+              <option value="">IT</option>
+              <option value="">Sales</option>
+              <option value="">Marketing</option>
+            </select>
+          </div>
+          <div class="table-employees">
+            <table class="table table-hover">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">First</th>
+                  <th scope="col">Last</th>
+                  <th scope="col">Handle</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">1</th>
+                  <td>Mark</td>
+                  <td>Otto</td>
+                  <td>mdo</td>
+                </tr>
+                <tr>
+                  <th scope="row">2</th>
+                  <td>Jacob</td>
+                  <td>Thornton</td>
+                  <td>fat</td>
+                </tr>
+                <tr>
+                  <th scope="row">3</th>
+                  <td>Larry</td>
+                  <td>the Bird</td>
+                  <td>twitter</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  
+    
+  </div>
