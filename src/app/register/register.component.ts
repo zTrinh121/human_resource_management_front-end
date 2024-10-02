@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
+import { RegisterDTO } from '../dtos/user/register.dto';
 
 @Component({
   selector: 'app-register',
@@ -22,48 +23,34 @@ export class RegisterComponent {
   dateOfBirth: Date;
 
   constructor(private userService: UserService, private router: Router) {
-    this.username = 'jasonmick';
-    this.email = '';
-    this.password = 'jasonmick123';
-    this.confirmPassword = '';
+    this.username = 'johndoe';
+    this.email = 'johndoe@gmail.com';
+    this.password = 'johndoe123';
+    this.confirmPassword = 'johndoe123';
     this.dateOfBirth = new Date();
     this.dateOfBirth.setFullYear(this.dateOfBirth.getFullYear() - 18);
   }
 
   registerHandler() {
-    console.log('Come into register successfull');
-    debugger;
-    // const apiUrl = 'http://localhost:8080/api/v1/users/register';
-    const registerDTO = {
+    console.log("Goes into register");
+    debugger
+    const registerDTO:RegisterDTO = {
       user_name: this.username,
+      email: this.email,
       password: this.password,
-      role_id: 0,
+      role_id: 2,
     };
-    // const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     this.userService.register(registerDTO).subscribe({
       next: (response: any) => {
-        debugger;
         this.router.navigate(['/login']);
       },
       complete: () => {
-        debugger;
       },
       error: (error: any) => {
-        alert(`Cannot register, error: ${error.error.message}`);
+        debugger
+        alert(`Cannot register, error: ${error.message}`);
       },
     });
-    // this.http.post(apiUrl, registerData, { headers }).subscribe({
-    //   next: (response: any) => {
-    //     debugger;
-    //     this.router.navigate(['/login']);
-    //   },
-    //   complete: () => {
-    //     debugger;
-    //   },
-    //   error: (error: any) => {
-    //     alert(`Cannot register, error: ${error.error.message}`);
-    //   },
-    // });
   }
 
   checkPasswordMatch() {

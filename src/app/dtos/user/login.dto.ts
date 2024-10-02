@@ -1,13 +1,17 @@
 import { IsString, IsNotEmpty, IsPhoneNumber } from 'class-validator';
 
-export class RegisterDTO{
+export default class LoginDTO{
+    @IsString()
+    @IsNotEmpty()
     user_name: string;
+
+    @IsString()
+    @IsNotEmpty()
     password: string;
-    role_id: number;
 
     constructor(data: any){
         this.user_name=data.user_name;;
         this.password=data.password;
-        this.role_id=data.role_id || 2;
     }
+    
 }

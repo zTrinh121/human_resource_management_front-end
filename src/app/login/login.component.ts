@@ -1,27 +1,46 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import LoginDTO from '../dtos/user/login.dto';
  
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, CommonModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username: string = '';
+  @ViewChild('loginForm') loginForm!: NgForm;
+
+  username: string;
   password: string;
 
-  constructor() {
-    // this.username = '';
-    this.password = '';
+  constructor(private userService: UserService, private router: Router) {
+    this.username = 'janedoe123';
+    this.password = 'janedoe123';
   }
 
-  onUsernameChange(){
-    console.log(`Username: ${this.username}`);
+  loginHandler() {
+    debugger
+    const loginDTO:LoginDTO = {
+      user_name: this.username,
+      password: this.password
+    };
+    this.userService.login(loginDTO).subscribe({
+      next: (response: any) => {
+        this.router.navigate(['/']);
+      },
+      complete: () => {
+      },
+      error: (error: any) => {
+        debugger
+        alert(`Cannot login , error: ${error.error.message}`);
+      },
+    });
   }
 
-  onPasswordChange(){
-    console.log(`Password: ${this.password}`);
-  }
 }

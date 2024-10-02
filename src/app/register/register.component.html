@@ -91,22 +91,30 @@
                   name="username"
                   [(ngModel)]="username"
                 />
+                <p class="text-danger text-start" *ngIf="username.length == 0 &&
+                registerForm.form.touched">Username is required</p>
               </div>
               <!-- End: Username -->
 
+              <!-- Start: Email -->
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
                   type="email"
                   class="form-control form-control-lg"
+                  (focus)="registerForm.form.markAsTouched()" 
                   placeholder="Email"
                   name="email"
                   [(ngModel)]="email"
                 />
+                <p class="text-danger text-start" *ngIf="username.length == 0 &&
+                registerForm.form.touched">Email is required</p>
               </div>
+              <!-- End:  Email -->
 
+              <!-- Start:  Password -->
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
-                  type="password"
+                  type="password" required
                   (focus)="registerForm.form.markAsTouched()" 
                   id="form3Example4cg"
                   class="form-control form-control-lg"
@@ -117,10 +125,12 @@
                 <p class="text-danger text-start" *ngIf="password.length < 8 &&
                 registerForm.form.touched">Password must at least 8 characters</p>
               </div>
+              <!-- End:  Password -->
 
+              <!-- Start: Confirm password -->
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
-                  type="password"
+                  type="password" required
                   id="form3Example4cdg"
                   class="form-control form-control-lg"
                   placeholder="Confirm password"
@@ -131,6 +141,7 @@
                 <p class="text-danger text-start" *ngIf="registerForm.controls['confirmPassword']?.hasError('passwordMissMatch')
                 && registerForm.form.touched">Confirm password does not match with password</p>
               </div>
+              <!-- End: Confirm password -->
 
               <div class="d-flex justify-content-center">
                 <button
