@@ -1,5 +1,5 @@
 <div class="container-fluid">
-  <div class="row flex-nowrap">
+  <div class="row flex-nowrap content">
     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
       <app-header></app-header>
     </div>
@@ -71,32 +71,27 @@
           <thead class="thead-dark">
             <tr>
               <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Handle</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Department</th>
+              <th scope="col">Job Title</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>mdo</td>
+            <tr *ngFor="let employee of employees | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
+              <td>{{ (p-1)* itemsPerPage + i + 1 }}</td>
+              <td>{{ employee.first_name + " " +employee.last_name }}</td>
+              <td>{{ employee.email }}</td>
+              <td>{{ employee.phone_number }}</td>
+              <td>{{ employee.department_name }}</td>
+              <td>{{ employee.job_title }}</td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>twitter</td>
-            </tr>
+           
+            
           </tbody>
         </table>
+        <pagination-controls (pageChange)="p = $event" class="text-center"></pagination-controls> 
       </div>
     </div>
   </div>
