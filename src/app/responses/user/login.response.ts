@@ -1,5 +1,11 @@
 export interface LoginResponse {
-  data: string;
+  data: 
+    {
+      token: string;
+      role_name: string;
+      user_name: string;
+    }
+  ;
   httpStatus: string;
   message: string;
 }

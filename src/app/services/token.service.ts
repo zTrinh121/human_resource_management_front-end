@@ -10,13 +10,14 @@ export class TokenService{
 
     getToken():string | null {
         if(typeof window !== 'undefined'){
-            return localStorage.getItem('access_token');
+            return localStorage.getItem(this.TOKEN_KEY);
         }
         return null;
     }
     setToken(token: string): void{
         localStorage.setItem(this.TOKEN_KEY, token);
     }
+    
 
     removeToken(): void{
         localStorage.removeItem(this.TOKEN_KEY);

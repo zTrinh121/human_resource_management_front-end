@@ -37,16 +37,15 @@ export class LoginComponent {
     };
     this.userService.login(loginDTO).subscribe({
       next: (response: LoginResponse) => {
-        debugger
         const { data } = response;
-        this.tokenService.setToken(data);
-        console.log("TOken set in localstorage: ", data)
+        this.tokenService.setToken(data.token);
+        this.userService.setUserName(data.user_name);
+        this.userService.setRoleName(data.role_name);
         this.router.navigate(['/']);
       },
       complete: () => {},
       error: (error: any) => {
-        debugger;
-        alert(`Cannot login , error: ${error.error.message}`);
+        console.log(error);
       },
     });
   }

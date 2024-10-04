@@ -1,11 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import { EmployeeService } from '../../services/employee.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { CommonModule } from '@angular/common';
 import { DepartmentService } from '../../services/department.service';
-import { FormsModule, NgForm } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-employees',
   standalone: true,
@@ -14,7 +15,7 @@ import { FormsModule, NgForm } from '@angular/forms';
     HeaderComponent,
     CommonModule,
     NgxPaginationModule,
-    FormsModule
+    FormsModule,
   ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss',
@@ -28,10 +29,13 @@ export class EmployeesComponent implements OnInit {
   keyword: string = '';
   selectedDeparment: string = ''
   filteredEmployees: any[] = [];
+  loading = false;
+  roleName: string | null = '';
 
   constructor(
     private employeeService: EmployeeService,
-    private departmentService: DepartmentService
+    private departmentService: DepartmentService,
+    private userService: UserService,
   ) {
     this.keyword = '';
   }
@@ -39,9 +43,11 @@ export class EmployeesComponent implements OnInit {
   ngOnInit(): void {
     this.fetchEmployees();
     this.fetchDepartments();
+    this.roleName = this.userService.getRoleName();
   }
 
   fetchEmployees(): void {
+    this.loading = true;
     this.employeeService.getAllEmployees().subscribe({
       next: (data) => {
         this.employees = data.data;
@@ -50,6 +56,7 @@ export class EmployeesComponent implements OnInit {
         console.error('Error fetching employees', error);
       },
     });
+    
   }
 
   fetchDepartments(): void {

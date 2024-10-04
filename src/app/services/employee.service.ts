@@ -26,5 +26,6 @@ import { Observable } from "rxjs";
   searchEmployees(keyword: string, departmentName: string): Observable<any> {
     return this.http.get(`${this.apiSearchEmployees}?keyword=${keyword}&departmentName=${departmentName}`);
   }
+  
 
   }

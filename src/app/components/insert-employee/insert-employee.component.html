@@ -1,15 +1,113 @@
 <div class="container-fluid">
-    <div class="row flex-nowrap content">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
-        <app-header></app-header>
+  <div class="row flex-nowrap content">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
+      <app-header></app-header>
+    </div>
+    <div class="col py-3">
+      <div class="intro-section">
+        <h1>Insert a new employee</h1>
       </div>
-      <div class="col py-3">
-        <div class="intro-section">
-          <h1>Insert a new employee</h1>
+
+      <form>
+        <div class="row mb-3">
+          <div class="col">
+            <label>First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="First name"
+              aria-label="First name"
+              required
+            />
+          </div>
+          <div class="col">
+            <label>Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Last name"
+              aria-label="Last name"
+              required
+            />
+          </div>
         </div>
-  
-        
-      </div>
+        <div class="mb-3">
+          <label>Email</label>
+          <input
+            placeholder="Email"
+            type="email"
+            class="form-control"
+            aria-describedby="emailHelp"
+            required
+          />
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label>Date of birth</label>
+            <input type="date" class="form-control" />
+          </div>
+          <div class="col">
+            <label>Hire Date</label>
+            <input type="date" class="form-control" required />
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label>Salary</label>
+          <input
+            type="number"
+            class="form-control"
+            required
+            placeholder="Salary"
+          />
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label>Department</label>
+
+            <select
+              class="form-control form-select department"
+              name="selectedDeparment"
+            >
+              <option
+                *ngFor="let department of departments"
+                [value]="department.department_id"
+              >
+                {{ department.department_name }}
+              </option>
+            </select>
+          </div>
+          <div class="col">
+            <label>Job Title</label>
+
+            <select
+              class="form-control form-select department"
+              name="selectedJob"
+            >
+              <option
+                *ngFor="let job of jobs"
+                [value]="job.job_is"
+              >
+                {{ job.job_title }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label>Username</label>
+          <input
+            type="number"
+            class="form-control"
+            required
+            placeholder="Mapping with user account (not required)"
+          />
+        </div>
+        <div class="d-grid gap-2 col-6 mx-auto">
+          <button type="submit" class="btn btn-primary btn-submit">
+            Submit
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-  
+</div>

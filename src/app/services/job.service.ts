@@ -18,7 +18,7 @@ import { Observable } from "rxjs";
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
 
-  getAllDepartments(): Observable<any> {
+  getAllJobs(): Observable<any> {
     return this.http.get(this.apiGetAllJobs);
   }
 
