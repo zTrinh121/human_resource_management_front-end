@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsPhoneNumber, IsDate, IsNumber, IsEmail } from 'class-validator';
 
-export default class employeeDTO{
+export default class EmployeeDTO{
     @IsString()
     @IsNotEmpty()
     first_name: string;
@@ -70,7 +70,7 @@ export default class employeeDTO{
         this.manager_name=data.manager_name;
         this.job_title=data.job_title;
         this.department_name=data.department_name;
-        this.employee_status=data.employee_status;e
+        this.employee_status=data.employee_status;
     }
     
 }

@@ -1,3 +1,8 @@
+<style>
+  .pagination-page ::ng-deep .ngx-pagination .current {
+    background: #6610f2;
+  }
+</style>
 <div class="container-fluid">
   <div class="row flex-nowrap content">
     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
@@ -12,58 +17,31 @@
         <input
           type="text"
           class="form-control search-input"
-          placeholder="Search by name, role, department..."
+          placeholder="Search by name, job title"
+          name="keyword"
+          [(ngModel)]="keyword"
+          (input)="onSearch()"
         />
-        <select class="form-control form-select department">
-          <option selected>All Department</option>
-          <option value="">IT</option>
-          <option value="">Sales</option>
-          <option value="">Marketing</option>
-        </select>
-        <button
-          type="button"
-          class="btn btn-create"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+        <select
+          class="form-control form-select department"
+          name="selectedDeparment"
+          [(ngModel)]="selectedDeparment"
+          (change)="onSearch()"
         >
-          <i class="fa-solid fa-plus"></i>
-          Insert
-        </button>
-      </div>
-      <!-- Modal -->
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Insert new employee</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">...</div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">
-                Save changes
-              </button>
-            </div>
-          </div>
-        </div>
+          <option value="" selected>All Department</option>
+          <option
+            *ngFor="let department of departments"
+            [value]="department.department_name"
+          >
+            {{ department.department_name }}
+          </option>
+        </select>
+        <a href="insert-employee">
+          <button type="button" class="btn btn-create">
+            <i class="fa-solid fa-plus"></i>
+            Insert
+          </button></a
+        >
       </div>
 
       <div class="table-employees">
@@ -79,19 +57,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let employee of employees | paginate: { itemsPerPage: 7, currentPage: p }; let i = index">
-              <td>{{ (p-1)* itemsPerPage + i + 1 }}</td>
-              <td>{{ employee.first_name + " " +employee.last_name }}</td>
+            <tr
+              *ngFor="
+                let employee of employees
+                  | paginate : { itemsPerPage: 7, currentPage: p };
+                let i = index
+              "
+            >
+              <td>{{ (p - 1) * itemsPerPage + i + 1 }}</td>
+              <td>{{ employee.first_name + " " + employee.last_name }}</td>
               <td>{{ employee.email }}</td>
               <td>{{ employee.phone_number }}</td>
               <td>{{ employee.department_name }}</td>
               <td>{{ employee.job_title }}</td>
             </tr>
-           
-            
           </tbody>
         </table>
-        <pagination-controls (pageChange)="p = $event" class="text-center"></pagination-controls> 
+        <pagination-controls
+          (pageChange)="p = $event"
+          class="text-center pagination-page"
+        ></pagination-controls>
       </div>
     </div>
   </div>

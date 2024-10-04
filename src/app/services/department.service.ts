@@ -7,9 +7,8 @@ import { Observable } from "rxjs";
     providedIn: 'root', 
   })
 
-  export class EmployeeService{
-    private apiGetAllEmployees = `${environment.apiBaseUrl}/employees/all`;
-    private apiSearchEmployees = `${environment.apiBaseUrl}/employees/search`;
+  export class DepartmentService{
+    private apiGetAllDepartments = `${environment.apiBaseUrl}/departments/all`;
     private apiConfig = {
       headers: this.createHeaders(),
     }
@@ -19,12 +18,8 @@ import { Observable } from "rxjs";
     return new HttpHeaders({ 'Content-Type': 'application/json' });
   }
 
-  getAllEmployees(): Observable<any> {
-    return this.http.get(this.apiGetAllEmployees);
-  }
-
-  searchEmployees(keyword: string, departmentName: string): Observable<any> {
-    return this.http.get(`${this.apiSearchEmployees}?keyword=${keyword}&departmentName=${departmentName}`);
+  getAllDepartments(): Observable<any> {
+    return this.http.get(this.apiGetAllDepartments);
   }
 
   }
