@@ -1,7 +1,7 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit  } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import LoginDTO from '../../dtos/user/login.dto';
@@ -15,16 +15,21 @@ import { LoginResponse } from '../../responses/user/login.response';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit  {
   @ViewChild('loginForm') loginForm!: NgForm;
 
   username: string;
   password: string;
 
+  ngOnInit() {
+   
+  }
+
   constructor(
     private userService: UserService,
     private router: Router,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private formBuilder: FormBuilder
   ) {
     this.username = '';
     this.password = '';

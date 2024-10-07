@@ -8,7 +8,7 @@
         <h1>Insert a new employee</h1>
       </div>
 
-      <form>
+      <form #insertEmployeeForm="ngForm" (ngSubmit)="insertEmployee(insertEmployeeForm)">
         <div class="row mb-3">
           <div class="col">
             <label>First Name</label>
@@ -17,18 +17,30 @@
               class="form-control"
               placeholder="First name"
               aria-label="First name"
+              name="firstName"
               required
             />
+            <p
+              class="text-danger text-start"
+              *ngIf="firstName.length == 0"
+            >
+              First name is required
+            </p>
           </div>
           <div class="col">
             <label>Last Name</label>
             <input
               type="text"
               class="form-control"
+              name="lastName"
               placeholder="Last name"
               aria-label="Last name"
               required
             />
+            <p
+              class="text-danger text-start"
+              *ngIf="lastName.length == 0"
+            >
           </div>
         </div>
         <div class="mb-3">
@@ -36,19 +48,33 @@
           <input
             placeholder="Email"
             type="email"
+            name="email"
             class="form-control"
             aria-describedby="emailHelp"
             required
           />
+          <p
+              class="text-danger text-start"
+              *ngIf="email.length == 0"
+            >
         </div>
         <div class="row mb-3">
           <div class="col">
             <label>Date of birth</label>
-            <input type="date" class="form-control" />
+            <input type="date" class="form-control" name="dateOfBirth" />
           </div>
           <div class="col">
             <label>Hire Date</label>
-            <input type="date" class="form-control" required />
+            <input
+              type="date"
+              name="hireDate"
+              class="form-control"
+              required
+            />
+            <p
+              class="text-danger text-start"
+              *ngIf="hireDate === null"
+            >
           </div>
         </div>
 
@@ -57,7 +83,8 @@
           <input
             type="number"
             class="form-control"
-            required
+            name="salary"
+            required 
             placeholder="Salary"
           />
         </div>
@@ -67,7 +94,7 @@
 
             <select
               class="form-control form-select department"
-              name="selectedDeparment"
+              name="departmentId"
             >
               <option
                 *ngFor="let department of departments"
@@ -82,28 +109,29 @@
 
             <select
               class="form-control form-select department"
-              name="selectedJob"
+              name="jobId"
             >
-              <option
-                *ngFor="let job of jobs"
-                [value]="job.job_is"
-              >
+              <option *ngFor="let job of jobs" [value]="job.job_is">
                 {{ job.job_title }}
               </option>
             </select>
           </div>
         </div>
         <div class="mb-3">
-          <label>Username</label>
+          <label>User ID</label>
           <input
             type="number"
             class="form-control"
+            name="userId"
             required
             placeholder="Mapping with user account (not required)"
           />
         </div>
         <div class="d-grid gap-2 col-6 mx-auto">
-          <button type="submit" class="btn btn-primary btn-submit">
+          <button
+            type="submit"
+            class="btn btn-primary btn-submit"
+          >
             Submit
           </button>
         </div>

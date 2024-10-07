@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsPhoneNumber, IsDate, IsNumber, IsEmail, IsOptional } from 'class-validator';
 
-export default class EmployeeDTO{
+export default class EmployeeInsertDTO{
     @IsString()
     @IsNotEmpty({ message: 'First name is required'})
     first_name: string;
@@ -11,7 +11,6 @@ export default class EmployeeDTO{
 
     @IsEmail()
     @IsNotEmpty({ message: 'Email is required'})
-
     email: string;
 
     @IsPhoneNumber()
@@ -35,7 +34,6 @@ export default class EmployeeDTO{
     department_id: number;
 
     @IsNumber()
-    @IsNotEmpty({ message: 'User ID is required'})
     user_id: number;
 
     @IsNumber()
@@ -46,17 +44,6 @@ export default class EmployeeDTO{
     @IsNotEmpty({ message: 'Salary is required'})
     salary: number;
 
-    @IsString()
-    manager_name: string;
-
-    @IsString()
-    job_title: string;
-
-    @IsString()
-    department_name: string;
-
-    @IsString()
-    employee_status: string;
 
     constructor(data: any){
         this.first_name=data.first_name;;
@@ -70,10 +57,6 @@ export default class EmployeeDTO{
         this.user_id=data.user_id;
         this.job_id=data.job_id;
         this.salary=data.salary;
-        this.manager_name=data.manager_name;
-        this.job_title=data.job_title;
-        this.department_name=data.department_name;
-        this.employee_status=data.employee_status;
     }
     
 }
