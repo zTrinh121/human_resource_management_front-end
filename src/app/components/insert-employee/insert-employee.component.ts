@@ -1,37 +1,41 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 import { HeaderComponent } from "../header/header.component";
+
 import { EmployeeService } from '../../services/employee.service';
 import { DepartmentService } from '../../services/department.service';
-import { FormsModule, NgForm } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { JobService } from '../../services/job.service';
-import EmployeeInsertDTO from '../../dtos/employeeInsert.dto';
 import { LoginResponse } from '../../responses/user/login.response';
-import { Router } from '@angular/router';
 
+import EmployeeInsertDTO from '../../dtos/employeeInsert.dto';
 @Component({
   selector: 'app-insert-employee',
   standalone: true,
-  imports: [HeaderComponent, FormsModule, CommonModule],
-  templateUrl: './insert-employee.component.html',
+  imports: [HeaderComponent, FormsModule, CommonModule, ReactiveFormsModule],
+templateUrl: './insert-employee.component.html',
   styleUrl: './insert-employee.component.scss'
 })
 export class InsertEmployeeComponent implements OnInit {
-  @ViewChild('insertEmployeeForm') loginForm!: NgForm;
-
+  insertEmployeeForm: FormGroup = new FormGroup({
+    firstName: new FormControl("Rock", Validators.required),
+    lastName: new FormControl("Doe",Validators.required),
+    email: new FormControl("rockdoe@gmail.com", [Validators.required, Validators.email]),
+    phoneNumber: new FormControl("0928918322",[Validators.required, Validators.pattern("[0-9 ]{10}")]),
+    dateOfBirth: new FormControl(),
+    hireDate: new FormControl(Validators.required),
+    managerId: new FormControl(1, Validators.required),
+    departmentId: new FormControl(1, Validators.required),
+    userId: new FormControl(),
+    jobId: new FormControl(1, Validators.required),
+    salary: new FormControl(10000, Validators.required),
+  })
+  formValue: any;
+  
   departments: any[] = [];
   jobs: any[] = [];
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  dateOfBirth: Date;
-  hireDate: Date;
-  managerId: number;
-  departmentId: number;
-  userId: number;
-  jobId: number;
-  salary: number;
 
   ngOnInit(): void {
     this.fetchDepartments();
@@ -44,17 +48,6 @@ export class InsertEmployeeComponent implements OnInit {
     private jobService: JobService,
     private router: Router
   ) {
-    this.firstName = '';
-    this.lastName = '';
-    this.email = '';
-    this.phoneNumber = '';
-    this.dateOfBirth = new Date();
-    this.hireDate = new Date();
-    this.managerId = 0;
-    this.departmentId = 0;
-    this.userId = 0;
-    this.jobId = 0;
-    this.salary = 0;
   }
 
   fetchDepartments(): void {
@@ -79,35 +72,32 @@ export class InsertEmployeeComponent implements OnInit {
     });
   }
 
-  insertEmployee(insertEmployeeForm: NgForm){
-    if(insertEmployeeForm.invalid){
-      insertEmployeeForm.form.markAllAsTouched(); 
-      return
-    }
+  insertEmployee(){
+    this.formValue = this.insertEmployeeForm.value;
 
     const employeeDTO : EmployeeInsertDTO = {
-      first_name: this.firstName,
-      last_name: this.lastName,
-      email: this.email,
-      phone_number: this.phoneNumber,
-      date_of_birth: this.dateOfBirth,
-      hire_date: this.hireDate,
-      manager_id: this.managerId,
-      department_id: this.departmentId,
-      user_id: this.userId,
-      job_id: this.jobId,
-      salary: this.salary
+      first_name: this.formValue.firstName,
+      last_name: this.formValue.lastName,
+      email: this.formValue.email,
+      phone_number: this.formValue.phoneNumber,
+      date_of_birth: this.formValue.dateOfBirth,
+      hire_date: this.formValue.hireDate,
+      manager_id: this.formValue.managerId,
+      department_id: this.formValue.departmentId,
+      user_id: this.formValue.userId,
+      job_id: this.formValue.jobId,
+      salary: this.formValue.salary,
     }
     
-    // this.employeeService.insertEmployees(employeeDTO).subscribe({
-    //   next: (response: LoginResponse) => {
-    //     const { data } = response;
-    //     this.router.navigate(['/employees']);
-    //   },
-    //   complete: () => {},
-    //   error: (error: any) => {
-    //     console.log(error);
-    //   },
-    // });
+    this.employeeService.insertEmployees(employeeDTO).subscribe({
+      next: (response: LoginResponse) => {
+        const { data } = response;
+        this.router.navigate(['/employees']);
+      },
+      complete: () => {},
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
   }
 }

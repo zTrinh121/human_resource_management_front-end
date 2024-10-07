@@ -1,29 +1,29 @@
-import { Component, ViewChild, OnInit  } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component  } from '@angular/core';
+import { FormControl, FormGroup, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NgForm, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
 import { Router } from '@angular/router';
+
 import { UserService } from '../../services/user.service';
-import LoginDTO from '../../dtos/user/login.dto';
 import { TokenService } from '../../services/token.service';
+import LoginDTO from '../../dtos/user/login.dto';
 import { LoginResponse } from '../../responses/user/login.response';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements OnInit  {
-  @ViewChild('loginForm') loginForm!: NgForm;
+export class LoginComponent  {
 
-  username: string;
-  password: string;
-
-  ngOnInit() {
-   
-  }
+  loginForm: FormGroup = new FormGroup({
+    username : new FormControl("", Validators.required,),
+    password: new FormControl("",[Validators.required, Validators.minLength(8)]),
+  })
+  formValue: any;
 
   constructor(
     private userService: UserService,
@@ -31,14 +31,13 @@ export class LoginComponent implements OnInit  {
     private tokenService: TokenService,
     private formBuilder: FormBuilder
   ) {
-    this.username = '';
-    this.password = '';
   }
 
   loginHandler() {
+    this.formValue = this.loginForm.value;
     const loginDTO: LoginDTO = {
-      user_name: this.username,
-      password: this.password,
+      user_name: this.formValue.username,
+      password: this.formValue.password,
     };
     this.userService.login(loginDTO).subscribe({
       next: (response: LoginResponse) => {

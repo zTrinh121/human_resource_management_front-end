@@ -76,7 +76,7 @@
 
         <div class="card bg-glass">
           <div class="card-body px-4 py-5 px-md-5">
-            <form #loginForm="ngForm">
+            <form [formGroup]="loginForm">
               <label class="mb-2 h2 fw-bold text-center">
                 Login into Human Resources System</label
               >
@@ -84,16 +84,16 @@
               <div data-mdb-input-init class="form-outline mb-4">
                 <input
                   type="text"
-                  (focus)="loginForm.form.markAsTouched()" 
+                  formControlName="username"
                   id="username"
                   class="form-control"
                   placeholder="Username"
-                  name="username"
-                  required
-                  [(ngModel)]="username"
                 />
-                <p class="text-danger text-start" *ngIf="username.length == 0 &&
-                loginForm.form.touched">Username is required</p>
+                <div class="text-danger text-start">
+                  @if(loginForm.controls['username'].touched && loginForm.controls['username'].errors?.['required']){
+                    <span>Username is required</span>
+                  }
+                </div>
               </div>
               <!--End: Username -->
 
@@ -103,15 +103,17 @@
                   type="password"
                   autocomplete="on"
                   id="form3Example4"
-                  (focus)="loginForm.form.markAsTouched()" 
                   class="form-control"
                   placeholder="Password"
-                  name="password"
-                  required
-                  [(ngModel)]="password"
+                  formControlName="password"
                 />
-                <p class="text-danger text-start" *ngIf="password.length < 8 &&
-                loginForm.form.touched">Password must at least 8 characters</p>
+                <div class="text-danger text-start">
+                  @if(loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['required']){
+                    <span class="">Password is required</span>
+                  }@else if (loginForm.controls['password'].touched && loginForm.controls['password'].errors?.['minlength']) {
+                    <span>Password min length is 8 characters</span>
+                  }
+                </div>
               </div>
               <!--End: Password input -->
 
@@ -123,18 +125,11 @@
                 data-mdb-ripple-init
                 class="btn btn-primary btn-block mb-4 login-btn"
                 (click)="loginHandler()"
+                [disabled]="loginForm.invalid"
               >
                 Login
               </button>
             </form>
-            <!--End: Submit button -->
-
-            <!-- Start: Register -->
-            <!-- <p class="text-center text-muted mt-5 mb-0">
-                Not have account yet?
-                <a href="/register" class="fw-bold text-body"><u>Register here</u></a>
-              </p> -->
-            <!-- End: Register -->
           </div>
         </div>
       </div>

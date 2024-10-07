@@ -11,7 +11,7 @@ import EmployeeInsertDTO from '../dtos/employeeInsert.dto';
 export class EmployeeService {
   private apiGetAllEmployees = `${environment.apiBaseUrl}/employees/all`;
   private apiSearchEmployees = `${environment.apiBaseUrl}/employees/search`;
-  private apiInsertEmployees = `${environment.apiBaseUrl}/employees/search`;
+  private apiInsertEmployees = `${environment.apiBaseUrl}/employees/create`;
   private apiConfig = {
     headers: this.createHeaders(),
   };

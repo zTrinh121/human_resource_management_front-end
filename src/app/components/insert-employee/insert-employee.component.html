@@ -8,94 +8,130 @@
         <h1>Insert a new employee</h1>
       </div>
 
-      <form #insertEmployeeForm="ngForm" (ngSubmit)="insertEmployee(insertEmployeeForm)">
+      <form [formGroup]="insertEmployeeForm">
         <div class="row mb-3">
           <div class="col">
             <label>First Name</label>
             <input
+              formControlName="firstName"
               type="text"
               class="form-control"
               placeholder="First name"
               aria-label="First name"
-              name="firstName"
-              required
             />
-            <p
-              class="text-danger text-start"
-              *ngIf="firstName.length == 0"
-            >
-              First name is required
-            </p>
+            <div class="text-danger text-start">
+              @if(insertEmployeeForm.controls['firstName'].touched &&
+              insertEmployeeForm.controls['firstName'].errors?.['required']){
+              <span>First Name is required</span>
+              }
+            </div>
           </div>
           <div class="col">
             <label>Last Name</label>
             <input
+              formControlName="lastName"
               type="text"
               class="form-control"
-              name="lastName"
               placeholder="Last name"
               aria-label="Last name"
-              required
             />
-            <p
-              class="text-danger text-start"
-              *ngIf="lastName.length == 0"
-            >
+            <div class="text-danger text-start">
+              @if(insertEmployeeForm.controls['lastName'].touched &&
+              insertEmployeeForm.controls['lastName'].errors?.['required']){
+              <span>Last Name is required</span>
+              }
+            </div>
           </div>
         </div>
+
+        <div class="mb-3">
+          <label>Phone number</label>
+          <input
+            placeholder="Phone number"
+            type="text"
+            formControlName="phoneNumber"
+            class="form-control"
+          />
+          <div class="text-danger text-start">
+            @if(insertEmployeeForm.controls['phoneNumber'].touched &&
+            insertEmployeeForm.controls['phoneNumber'].errors?.['required']){
+            <span>Email is required</span>
+            }@else if(insertEmployeeForm.controls['phoneNumber'].touched &&
+            insertEmployeeForm.controls['phoneNumber'].errors?.['pattern']){
+            <span>Incorrect phone pattern</span>
+            }
+
+          </div>
+        </div>
+
         <div class="mb-3">
           <label>Email</label>
           <input
+            formControlName="email"
             placeholder="Email"
             type="email"
-            name="email"
             class="form-control"
-            aria-describedby="emailHelp"
-            required
           />
-          <p
-              class="text-danger text-start"
-              *ngIf="email.length == 0"
-            >
+          <div class="text-danger text-start">
+            @if(insertEmployeeForm.controls['email'].touched &&
+            insertEmployeeForm.controls['email'].errors?.['required']){
+            <span>Email is required</span>
+            }@else if(insertEmployeeForm.controls['email'].touched &&
+            insertEmployeeForm.controls['email'].errors?.['email']){
+            <span>Incorrect email format</span>
+            }
+
+          </div>
         </div>
         <div class="row mb-3">
           <div class="col">
             <label>Date of birth</label>
-            <input type="date" class="form-control" name="dateOfBirth" />
+            <input
+              formControlName="dateOfBirth"
+              type="date"
+              class="form-control"
+            />
           </div>
           <div class="col">
             <label>Hire Date</label>
             <input
+              formControlName="hireDate"
               type="date"
-              name="hireDate"
               class="form-control"
-              required
             />
-            <p
-              class="text-danger text-start"
-              *ngIf="hireDate === null"
-            >
+            <div class="text-danger text-start">
+              @if(insertEmployeeForm.controls['hireDate'].touched &&
+              insertEmployeeForm.controls['hireDate'].errors?.['required']){
+              <span>Hire date is required</span>
+              }
+            </div>
           </div>
         </div>
 
         <div class="mb-3">
           <label>Salary</label>
           <input
+            formControlName="salary"
             type="number"
             class="form-control"
-            name="salary"
-            required 
             placeholder="Salary"
           />
+          <div class="text-danger text-start">
+            @if(insertEmployeeForm.controls['salary'].touched &&
+            insertEmployeeForm.controls['salary'].errors?.['required']){
+            <span>Salary is required</span>
+            }
+          </div>
         </div>
         <div class="row mb-3">
           <div class="col">
             <label>Department</label>
 
             <select
+              formControlName="departmentId"
               class="form-control form-select department"
-              name="departmentId"
             >
+            <option value="" selected>Select a department</option>
               <option
                 *ngFor="let department of departments"
                 [value]="department.department_id"
@@ -103,27 +139,40 @@
                 {{ department.department_name }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(insertEmployeeForm.controls['departmentId'].touched &&
+              insertEmployeeForm.controls['departmentId'].errors?.['required']){
+              <span>Department is required</span>
+              }
+            </div>
           </div>
+
           <div class="col">
             <label>Job Title</label>
-
             <select
+              formControlName="jobId"
               class="form-control form-select department"
-              name="jobId"
             >
-              <option *ngFor="let job of jobs" [value]="job.job_is">
+            <option value="" selected>Select a job title</option>
+              <option *ngFor="let job of jobs" [value]="job.job_id">
                 {{ job.job_title }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(insertEmployeeForm.controls['jobId'].touched &&
+              insertEmployeeForm.controls['jobId'].errors?.['required']){
+              <span>Job is required</span>
+              }
+            </div>
           </div>
         </div>
+
         <div class="mb-3">
           <label>User ID</label>
           <input
+            formControlName="userId"
             type="number"
-            class="form-control"
-            name="userId"
-            required
+            class="form-control"  
             placeholder="Mapping with user account (not required)"
           />
         </div>
@@ -131,6 +180,8 @@
           <button
             type="submit"
             class="btn btn-primary btn-submit"
+            (click)="insertEmployee()"
+            [disabled]="insertEmployeeForm.invalid"
           >
             Submit
           </button>
