@@ -29,7 +29,6 @@ export class EmployeesComponent implements OnInit {
   keyword: string = '';
   selectedDeparment: string = ''
   filteredEmployees: any[] = [];
-  loading = false;
   roleName: string | null = '';
 
   constructor(
@@ -47,7 +46,6 @@ export class EmployeesComponent implements OnInit {
   }
 
   fetchEmployees(): void {
-    this.loading = true;
     this.employeeService.getAllEmployees().subscribe({
       next: (data) => {
         this.employees = data.data;

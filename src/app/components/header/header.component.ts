@@ -27,7 +27,9 @@ export class HeaderComponent {
     this.userService.removeRoleName();
     this.userService.removeUserName();
     this.tokenSerice.removeToken();
-    this.router.navigate(['/login']);
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 0);
   }
 
 
