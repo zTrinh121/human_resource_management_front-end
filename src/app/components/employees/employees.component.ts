@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { DepartmentService } from '../../services/department.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-employees',
   standalone: true,
@@ -31,6 +32,8 @@ export class EmployeesComponent implements OnInit {
   filteredEmployees: any[] = [];
   roleName: string | null = '';
 
+  errorMsg : string = '';
+
   constructor(
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
@@ -50,9 +53,10 @@ export class EmployeesComponent implements OnInit {
       next: (data) => {
         this.employees = data.data;
       },
-      error: (error) => {
-        console.error('Error fetching employees', error);
-      },
+      // error: (error) => {
+      //   this.errorMsg = error.message;
+      //   console.error('Error fetching employees', error);
+      // },
     });
     
   }
@@ -62,9 +66,9 @@ export class EmployeesComponent implements OnInit {
       next: (data) => {
         this.departments = data.data;
       },
-      error: (error) => {
-        console.error('Error fetching departments', error);
-      },
+      // error: (error) => {
+      //   console.error('Error fetching departments', error);
+      // },
     });
   }
 

@@ -6,12 +6,16 @@ import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptors, withInterceptor
 import { TokenInterceptor } from './interceptors/token.interceptor';
 import { loadingInterceptor } from './interceptors/loading.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { httpInterceptor } from './interceptors/http.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }), 
     provideRouter(routes),
     provideHttpClient(withFetch()),
+    provideHttpClient(withInterceptors([
+      httpInterceptor
+    ])),
     provideHttpClient(withInterceptorsFromDi()),
   {
     provide: HTTP_INTERCEPTORS,

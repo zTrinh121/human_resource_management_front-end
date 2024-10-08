@@ -43,7 +43,9 @@
           </button></a
         >
       </div>
-
+      @if(errorMsg ){
+        <p>{{ errorMsg }}</p>
+      }
       <div class="table-employees">
         <table class="table table-hover">
           <thead class="thead-dark">
