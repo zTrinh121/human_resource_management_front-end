@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { DepartmentService } from '../../services/department.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { HttpResponse } from '@angular/common/http';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-employees',
   standalone: true,
@@ -38,6 +38,7 @@ export class EmployeesComponent implements OnInit {
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
     private userService: UserService,
+    private toastr: ToastrService,
   ) {
     this.keyword = '';
   }
@@ -53,10 +54,6 @@ export class EmployeesComponent implements OnInit {
       next: (data) => {
         this.employees = data.data;
       },
-      // error: (error) => {
-      //   this.errorMsg = error.message;
-      //   console.error('Error fetching employees', error);
-      // },
     });
     
   }
@@ -66,9 +63,6 @@ export class EmployeesComponent implements OnInit {
       next: (data) => {
         this.departments = data.data;
       },
-      // error: (error) => {
-      //   console.error('Error fetching departments', error);
-      // },
     });
   }
 
@@ -82,9 +76,7 @@ export class EmployeesComponent implements OnInit {
         this.p = 1;
         this.employees = data.data;
       },
-      error: (error) => {
-        console.error('Error fetching employees', error);
-      },
     });
   }
+
 }

@@ -32,7 +32,8 @@
             "styles": [
               "src/styles.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "node_modules/ngx-spinner/animations/ball-scale-ripple.css"
+              "node_modules/ngx-spinner/animations/ball-scale-ripple.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",

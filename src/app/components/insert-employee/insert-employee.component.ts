@@ -95,9 +95,9 @@ export class InsertEmployeeComponent implements OnInit {
         this.router.navigate(['/employees']);
       },
       complete: () => {},
-      error: (error: any) => {
-        console.log(error);
-      },
+      // error: (error: any) => {
+      //   console.log(error);
+      // },
     });
   }
 }
