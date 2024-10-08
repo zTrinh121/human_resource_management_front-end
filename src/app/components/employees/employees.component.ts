@@ -1,13 +1,16 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+
+import { NgxPaginationModule } from 'ngx-pagination';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+
 import { FooterComponent } from '../footer/footer.component';
 import { HeaderComponent } from '../header/header.component';
 import { EmployeeService } from '../../services/employee.service';
-import { NgxPaginationModule } from 'ngx-pagination';
-import { CommonModule } from '@angular/common';
-import { DepartmentService } from '../../services/department.service';
-import { FormsModule } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { ToastrService } from 'ngx-toastr';
+import { DepartmentService } from '../../services/department.service';
+
 @Component({
   selector: 'app-employees',
   standalone: true,
@@ -38,7 +41,7 @@ export class EmployeesComponent implements OnInit {
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
     private userService: UserService,
-    private toastr: ToastrService,
+    private router: Router
   ) {
     this.keyword = '';
   }
@@ -77,6 +80,10 @@ export class EmployeesComponent implements OnInit {
         this.employees = data.data;
       },
     });
+  }
+
+  navigateToEmployeeDetail(employeeId : number){
+    this.router.navigate([`/employee/${employeeId}`])
   }
 
 }

@@ -7,10 +7,12 @@ import { InsertEmployeeComponent } from './components/insert-employee/insert-emp
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AuthGuard } from './guard/auth-guard.guard';
 import { JobComponent } from './components/job/job.component';
+import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
 
 export const routes: Routes = [
     {path: 'departments', component: DepartmentComponent, title: 'Departments', canActivate: [AuthGuard]},
     {path: 'employees', component: EmployeesComponent, title: 'Employees', canActivate: [AuthGuard]},
+    {path: 'employee/:id', component: EmployeeDetailComponent, title: 'Employee Detail', canActivate: [AuthGuard]},
     {path: 'insert-employee', component: InsertEmployeeComponent, title: 'Insert Employee', canActivate: [AuthGuard]},
     {path: '', redirectTo: '/login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent, title: 'Login'},

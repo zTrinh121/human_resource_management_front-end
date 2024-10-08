@@ -1,6 +1,10 @@
 import { IsString, IsNotEmpty, IsPhoneNumber, IsDate, IsNumber, IsEmail, IsOptional } from 'class-validator';
 
 export default class EmployeeDTO{
+    
+    @IsNumber()
+    employee_id: number;
+
     @IsString()
     @IsNotEmpty({ message: 'First name is required'})
     first_name: string;
@@ -59,6 +63,7 @@ export default class EmployeeDTO{
     employee_status: string;
 
     constructor(data: any){
+        this.employee_id=data.employee_id;
         this.first_name=data.first_name;;
         this.last_name=data.last_name;
         this.email=data.email;

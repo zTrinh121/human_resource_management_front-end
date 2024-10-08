@@ -9,9 +9,11 @@ import EmployeeInsertDTO from '../dtos/employeeInsert.dto';
   providedIn: 'root',
 })
 export class EmployeeService {
+  private apiGetEmployees = `${environment.apiBaseUrl}/employees`;
   private apiGetAllEmployees = `${environment.apiBaseUrl}/employees/all`;
   private apiSearchEmployees = `${environment.apiBaseUrl}/employees/search`;
   private apiInsertEmployees = `${environment.apiBaseUrl}/employees/create`;
+  private apiDeleteEmployees = `${environment.apiBaseUrl}/employees/delete`;
   private apiConfig = {
     headers: this.createHeaders(),
   };
@@ -19,6 +21,10 @@ export class EmployeeService {
   constructor(private http: HttpClient) {}
   private createHeaders(): HttpHeaders {
     return new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
+
+  getEmployeeById(employeeId: number): Observable<any> {
+    return this.http.get( `${this.apiGetEmployees}/${employeeId}`);
   }
 
   getAllEmployees(): Observable<any> {
@@ -34,4 +40,23 @@ export class EmployeeService {
   insertEmployees(employeeDTO: EmployeeInsertDTO): Observable<any> {
     return this.http.post(this.apiInsertEmployees, employeeDTO, this.apiConfig);
   }
+
+  updateEmployee(
+    employeeId: number,
+    updateEmployeesDTO: EmployeeInsertDTO
+  ): Observable<any> {
+    return this.http.put(
+      `${this.apiGetEmployees}/${employeeId}`,
+      updateEmployeesDTO,
+      this.apiConfig
+    );
+  }
+
+  deleteEmployee(employeeId: number): Observable<any> {
+    return this.http.put(
+      `${this.apiDeleteEmployees}/${employeeId}`,
+      this.apiConfig
+    );
+  }
+
 }
