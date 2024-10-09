@@ -16,7 +16,7 @@ import { DepartmentService } from '../../services/department.service';
 import { JobService } from '../../services/job.service';
 import { LoginResponse } from '../../responses/user/login.response';
 
-import EmployeeInsertDTO from '../../dtos/employeeInsert.dto';
+import EmployeeInsertDTO from '../../dtos/employee/employeeInsert.dto';
 @Component({
   selector: 'app-insert-employee',
   standalone: true,

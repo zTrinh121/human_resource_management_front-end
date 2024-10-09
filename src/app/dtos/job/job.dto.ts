@@ -1,6 +1,6 @@
 import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
-export default class departmentDTO{
+export default class JobDTO{
 
 
     @IsNumber()

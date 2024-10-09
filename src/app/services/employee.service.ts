@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { environment } from '../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import EmployeeDTO from '../dtos/employee.dto';
-import EmployeeInsertDTO from '../dtos/employeeInsert.dto';
+import EmployeeDTO from '../dtos/employee/employee.dto';
+import EmployeeInsertDTO from '../dtos/employee/employeeInsert.dto';
 
 @Injectable({
   providedIn: 'root',
