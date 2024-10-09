@@ -11,6 +11,7 @@ import DepartmentInsertDTO from "../dtos/department/departmentInsert.dto";
   export class DepartmentService{
     private apiDepartments = `${environment.apiBaseUrl}/departments`;
     private apiGetAllDepartments = `${environment.apiBaseUrl}/departments/all`;
+    private apiSearchDepartments = `${environment.apiBaseUrl}/departments/search`;
     private apiConfig = {
       headers: this.createHeaders(),
     }
@@ -26,6 +27,12 @@ import DepartmentInsertDTO from "../dtos/department/departmentInsert.dto";
 
   getDepartmentById(departmentId: number): Observable<any> {
     return this.http.get(`${this.apiDepartments}/${departmentId}`);
+  }
+
+  searchDepartments(keyword: string): Observable<any> {
+    return this.http.get(
+      `${this.apiSearchDepartments}?keyword=${keyword}`
+    );
   }
 
   insertDepartment(departmentDTO: DepartmentInsertDTO): Observable<any> {

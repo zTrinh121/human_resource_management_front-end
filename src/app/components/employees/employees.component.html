@@ -62,7 +62,7 @@
             <tr class="employee-detail"
               *ngFor="
                 let employee of employees
-                  | paginate : { itemsPerPage: 7, currentPage: p };
+                  | paginate : { itemsPerPage: 5, currentPage: p };
                 let i = index
               "
               (click)="navigateToEmployeeDetail(employee.employee_id)"

@@ -4,94 +4,95 @@
       <app-header></app-header>
     </div>
     <div class="col py-3">
+      <button class="btn" (click)="backClicked()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </button>
       <div class="intro-section">
         <h1>Employee Detail</h1>
       </div>
 
-      <form [formGroup]="employeeDetailForm" (ngSubmit)="updateEmployee(employeeDetailForm.value)">
+      <form [formGroup]="employeeDetailForm">
         <div class="row mb-3">
           <div class="col">
             <label>First Name</label>
             <input
-              [disabled]="!isAdmin"
+              [readonly]="!isAdmin"
               formControlName="first_name"
               type="text"
               class="form-control"
               placeholder="First name"
               aria-label="First name"
             />
-            <!-- <div class="text-danger text-start">
-                @if(insertEmployeeForm.controls['firstName'].touched &&
-                insertEmployeeForm.controls['firstName'].errors?.['required']){
+            <div class="text-danger text-start">
+                @if(employeeDetailForm.controls['first_name'].touched &&
+                employeeDetailForm.controls['first_name'].errors?.['required']){
                 <span>First Name is required</span>
                 }
-              </div> -->
+              </div>
           </div>
           <div class="col">
             <label>Last Name</label>
             <input
-              [disabled]="!isAdmin"
+              [readonly]="!isAdmin"
               formControlName="last_name"
               type="text"
               class="form-control"
               placeholder="Last name"
               aria-label="Last name"
             />
-            <!-- <div class="text-danger text-start">
-                @if(insertEmployeeForm.controls['lastName'].touched &&
-                insertEmployeeForm.controls['lastName'].errors?.['required']){
+            <div class="text-danger text-start">
+                @if(employeeDetailForm.controls['last_name'].touched &&
+                employeeDetailForm.controls['last_name'].errors?.['required']){
                 <span>Last Name is required</span>
                 }
-              </div> -->
+              </div>
           </div>
         </div>
 
         <div class="mb-3">
           <label>Phone number</label>
           <input
-            [disabled]="!isAdmin"
+            [readonly]="!isAdmin"
             placeholder="Phone number"
             type="text"
             formControlName="phone_number"
             class="form-control"
           />
-          <!-- <div class="text-danger text-start">
-              @if(insertEmployeeForm.controls['phoneNumber'].touched &&
-              insertEmployeeForm.controls['phoneNumber'].errors?.['required']){
-              <span>Email is required</span>
-              }@else if(insertEmployeeForm.controls['phoneNumber'].touched &&
-              insertEmployeeForm.controls['phoneNumber'].errors?.['pattern']){
-              <span>Incorrect phone pattern</span>
-              }
-  
-            </div> -->
+          <div class="text-danger text-start">
+            @if(employeeDetailForm.controls['phone_number'].touched &&
+            employeeDetailForm.controls['phone_number'].errors?.['required']){
+            <span>Phone number is required</span>
+            }@else if(employeeDetailForm.controls['phone_number'].touched &&
+            employeeDetailForm.controls['phone_number'].errors?.['pattern']){
+            <span>Incorrect phone pattern</span>
+            }
+          </div>
         </div>
 
         <div class="mb-3">
           <label>Email</label>
           <input
-            [disabled]="!isAdmin"
+            [readonly]="!isAdmin"
             formControlName="email"
             placeholder="Email"
             type="email"
             class="form-control"
           />
-          <!-- <div class="text-danger text-start">
-              @if(insertEmployeeForm.controls['email'].touched &&
-              insertEmployeeForm.controls['email'].errors?.['required']){
-              <span>Email is required</span>
-              }@else if(insertEmployeeForm.controls['email'].touched &&
-              insertEmployeeForm.controls['email'].errors?.['email']){
-              <span>Incorrect email format</span>
-              }
-  
-            </div> -->
+          <div class="text-danger text-start">
+            @if(employeeDetailForm.controls['email'].touched &&
+            employeeDetailForm.controls['email'].errors?.['required']){
+            <span>Email is required</span>
+            }@else if(employeeDetailForm.controls['email'].touched &&
+            employeeDetailForm.controls['email'].errors?.['email']){
+            <span>Incorrect email format</span>
+            }
+          </div>
         </div>
         <div class="row mb-3">
           <div class="col">
             <label>Date of birth</label>
             <input
-              [disabled]="!isAdmin"
+              [readonly]="!isAdmin"
               formControlName="date_of_birth"
               type="date"
               class="form-control"
@@ -100,35 +101,35 @@
           <div class="col">
             <label>Hire Date</label>
             <input
-              [disabled]="!isAdmin"
+              [readonly]="!isAdmin"
               formControlName="hire_date"
               type="date"
               class="form-control"
             />
-            <!-- <div class="text-danger text-start">
-                @if(insertEmployeeForm.controls['hireDate'].touched &&
-                insertEmployeeForm.controls['hireDate'].errors?.['required']){
-                <span>Hire date is required</span>
-                }
-              </div> -->
+            <div class="text-danger text-start">
+              @if(employeeDetailForm.controls['hire_date'].touched &&
+              employeeDetailForm.controls['hire_date'].errors?.['required']){
+              <span>Hire date is required</span>
+              }
+            </div>
           </div>
         </div>
 
         <div class="mb-3">
           <label>Salary</label>
           <input
-            [disabled]="!isAdmin"
+            [readonly]="!isAdmin"
             formControlName="salary"
             type="number"
             class="form-control"
             placeholder="Salary"
           />
-          <!-- <div class="text-danger text-start">
-            @if(insertEmployeeForm.controls['salary'].touched &&
-            insertEmployeeForm.controls['salary'].errors?.['required']){
+          <div class="text-danger text-start">
+            @if(employeeDetailForm.controls['salary'].touched &&
+            employeeDetailForm.controls['salary'].errors?.['required']){
             <span>Salary is required</span>
             }
-          </div> -->
+          </div>
         </div>
         <div class="row mb-3">
           <div class="col">
@@ -147,8 +148,8 @@
               </option>
             </select>
             <!-- <div class="text-danger text-start">
-              @if(insertEmployeeForm.controls['departmentId'].touched &&
-              insertEmployeeForm.controls['departmentId'].errors?.['required']){
+              @if(employeeDetailForm.controls['departmentId'].touched &&
+              employeeDetailForm.controls['departmentId'].errors?.['required']){
               <span>Department is required</span>
               }
             </div> -->
@@ -166,8 +167,8 @@
               </option>
             </select>
             <!-- <div class="text-danger text-start">
-              @if(insertEmployeeForm.controls['jobId'].touched &&
-              insertEmployeeForm.controls['jobId'].errors?.['required']){
+              @if(employeeDetailForm.controls['jobId'].touched &&
+              employeeDetailForm.controls['jobId'].errors?.['required']){
               <span>Job is required</span>
               }
             </div> -->
@@ -177,7 +178,7 @@
         <div class="mb-3">
           <label>User ID</label>
           <input
-            [disabled]="!isAdmin"
+            [readonly]="!isAdmin"
             formControlName="user_id"
             type="number"
             class="form-control"
@@ -190,15 +191,57 @@
               *ngIf="isAdmin"
               type="submit"
               class="btn btn-primary btn-submit"
+              (click)="updateEmployee(employeeDetailForm.value)"
             >
               Update
             </button>
           </div>
           <div class="">
-            <button *ngIf="isAdmin" class="btn btn-delete">Delete</button>
+            <button
+              *ngIf="isAdmin"
+              class="btn btn-delete"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteConfirmModal"
+            >
+              Delete
+            </button>
           </div>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="deleteConfirmModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 id="exampleModalLabel">
+          Are you sure to delete employee with ID = {{ id }}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-submit" (click)="deleteEmployee()">
+          Delete
+        </button>
+      </div>
     </div>
   </div>
 </div>

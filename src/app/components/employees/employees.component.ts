@@ -20,6 +20,7 @@ import { DepartmentService } from '../../services/department.service';
     CommonModule,
     NgxPaginationModule,
     FormsModule,
+    
   ],
   templateUrl: './employees.component.html',
   styleUrl: './employees.component.scss',
@@ -29,10 +30,9 @@ export class EmployeesComponent implements OnInit {
   employees: any[] = [];
   departments: any[] = [];
   p: number = 1;
-  itemsPerPage: number = 7;
+  itemsPerPage: number = 5;
   keyword: string = '';
   selectedDeparment: string = ''
-  filteredEmployees: any[] = [];
   roleName: string | null = '';
 
   errorMsg : string = '';

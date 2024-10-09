@@ -1,3 +1,8 @@
+<style>
+  .pagination-page ::ng-deep .ngx-pagination .current {
+    background: #6610f2;
+  }
+</style>
 <div class="container-fluid">
   <div class="row flex-nowrap">
     <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
@@ -14,21 +19,26 @@
           type="text"
           class="form-control search-input"
           placeholder="Search by name department..."
+          name="keyword"
+          [(ngModel)]="keyword"
+          (input)="onSearch()"
         />
+        @if(isAdmin){
         <button
           type="button"
           class="btn btn-create"
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target="#insertModal"
         >
           <i class="fa-solid fa-plus"></i>
           Insert
         </button>
+        }
       </div>
       <!-- End: Searching/Insert -->
 
       <!-- Start: Table -->
-      <div class="table-employees">
+      <div class="table-departments">
         <table class="table table-hover">
           <thead class="thead-dark">
             <tr>
@@ -39,12 +49,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
+            <tr
+              class="department_detail"
+              *ngFor="
+                let department of departments
+                  | paginate : { itemsPerPage: 5, currentPage: p };
+                let i = index
+              "
+            >
+              <td>{{ (p - 1) * itemsPerPage + i + 1 }}</td>
+              <td>{{ department.department_name }}</td>
+              <td>{{ department.manager_name }}</td>
               <td>
                 <button
+                  (click)="handleUpdateForm(department.department_id)"
                   type="button"
                   class="btn btn-edit mr-1"
                   data-bs-toggle="modal"
@@ -62,20 +80,12 @@
                 </button>
               </td>
             </tr>
-            <tr>
-              <th scope="row">2</th>
-              <td>Jacob</td>
-              <td>Thornton</td>
-              <td>fat</td>
-            </tr>
-            <tr>
-              <th scope="row">3</th>
-              <td>Larry</td>
-              <td>the Bird</td>
-              <td>twitter</td>
-            </tr>
           </tbody>
         </table>
+        <pagination-controls
+          (pageChange)="p = $event"
+          class="text-center pagination-page"
+        ></pagination-controls>
       </div>
       <!-- End: Table -->
     </div>
@@ -86,7 +96,7 @@
 <!--Start: Modal Insert-->
 <div
   class="modal fade"
-  id="exampleModal"
+  id="insertModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
@@ -104,12 +114,41 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">
+        <form [formGroup]="insertDepartmentForm">
+          <div class="form-group">
+            <label for="departmentName">Department Name</label>
+            <input
+              formControlName="department_name"
+              type="text"
+              class="form-control"
+              id="departmentName"
+              placeholder="Enter department name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="managerName">Manager Name</label>
+            <select
+              class="form-control form-select department"
+              formControlName="manager_id"
+            >
+              <option
+                *ngFor="let employee of employees"
+                [value]="employee.employee_id"
+              >
+                {{ employee.first_name }} {{ employee.last_name }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn">Save changes</button>
+        <button type="button" class="btn" (click)="insertDepartment()">
+          Insert
+        </button>
       </div>
     </div>
   </div>
@@ -127,7 +166,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Editd department</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Edit department</h5>
         <button
           type="button"
           class="btn-close"
@@ -135,12 +174,44 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">
+        <form [formGroup]="updateDepartmentForm">
+          <div class="form-group">
+            <label for="departmentName">Department Name</label>
+            <input
+              formControlName="department_name"
+              type="text"
+              class="form-control"
+              id="departmentName"
+              placeholder="Enter department name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="managerName">Manager Name</label>
+
+            <select class="form-control form-select department" formControlName="manager_id">
+              @if(department !== null){
+              <option [value]="department.manager_id" selected
+              >
+                {{ department.manager_name }}
+              </option>
+              }
+        
+              <option
+                *ngFor="let employee of filteredEmployees"
+                [value]="employee.employee_id"
+              >
+                {{ employee.first_name }} {{ employee.last_name }}
+              </option>
+            </select>
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn">Save changes</button>
+        <button type="button" class="btn" (click)="updateDepartment(updateDepartmentForm.value, departmentId)">Update</button>
       </div>
     </div>
   </div>

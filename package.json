@@ -21,6 +21,7 @@
     "@angular/platform-server": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@angular/ssr": "^18.2.5",
+    "@fortawesome/angular-fontawesome": "^0.15.0",
     "bootstrap": "^5.3.3",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.14.1",
