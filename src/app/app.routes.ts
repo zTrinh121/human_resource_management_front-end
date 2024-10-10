@@ -8,6 +8,7 @@ import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AuthGuard } from './guard/auth-guard.guard';
 import { JobComponent } from './components/job/job.component';
 import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
+import { JobHistoryComponent } from './components/job-history/job-history.component';
 
 export const routes: Routes = [
     {path: 'departments', component: DepartmentComponent, title: 'Departments', canActivate: [AuthGuard]},
@@ -18,6 +19,7 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent, title: 'Login'},
     {path: 'register', component: RegisterComponent, title: 'Register'},
     {path: 'jobs', component: JobComponent, title: 'Jobs', canActivate: [AuthGuard]},
+    {path: 'job-history', component: JobHistoryComponent, title: 'Jobs', canActivate: [AuthGuard]},
     { path: '**', component: NotfoundComponent, title: 'Not found' },
     
 ];

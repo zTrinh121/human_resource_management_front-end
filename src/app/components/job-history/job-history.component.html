@@ -1,1 +1,188 @@
-<p>job-history works!</p>
+<style>
+  .pagination-page ::ng-deep .ngx-pagination .current {
+    background: #6610f2;
+  }
+</style>
+<div class="container-fluid">
+  <div class="row flex-nowrap">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
+      <app-header></app-header>
+    </div>
+    <div class="col py-3">
+      <div class="intro-section">
+        <h1>Job History List</h1>
+        <p>List all job histories</p>
+      </div>
+      <div class="search-box">
+        <input
+          type="text"
+          class="form-control search-input"
+          placeholder="Search by name, job title"
+          name="keyword"
+        />
+       
+        @if(isAdmin){
+        <button type="button" class="btn btn-create">
+          <i class="fa-solid fa-plus"></i>
+          Insert
+        </button>
+        }
+      </div>
+      <!-- Start: Table -->
+      <div class="table-departments">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Employee</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Start Date</th>
+              <th scope="col">End Date</th>
+              <th scope="col">Department</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="employee-detail"
+              *ngFor="
+                let jobHistory of jobHistories
+                  | paginate : { itemsPerPage: 5, currentPage: p };
+                let i = index
+              "
+            >
+              <td>{{ (p - 1) * itemsPerPage + i + 1 }}</td>
+              <td>{{ jobHistory.employee_name }}</td>
+              <td>{{ jobHistory.job_title }}</td>
+              <td>{{ jobHistory.start_date }}</td>
+              <td>{{ jobHistory.end_date }}</td>
+              <td>{{ jobHistory.department_name }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- End: Table -->
+    </div>
+  </div>
+</div>
+<!-- <app-footer></app-footer> -->
+
+<!--Start: Modal Insert-->
+<div
+  class="modal fade"
+  id="insertModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          Insert new department
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input
+              formControlName="job_title"
+              type="text"
+              class="form-control"
+              id="jobTitle"
+              placeholder="Enter job title"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End: Modal Insert -->
+
+<!--Start: Modal Edit -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit department</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="departmentName">Job Title</label>
+            <input
+              formControlName="job_title"
+              type="text"
+              class="form-control"
+              id="jobTitle"
+              placeholder="Enter Job Title"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End: Modal Edit -->
+
+<!--Start: Modal Delete -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete department</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Do you want to delete department with ID =</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End: Modal Delete -->
