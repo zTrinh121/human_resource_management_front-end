@@ -51,7 +51,6 @@ export class DepartmentComponent implements OnInit {
     private departmentService: DepartmentService,
     private employeeService: EmployeeService,
     private userService: UserService,
-    private router: Router,
     private toastr: ToastrService
   ) {}
 
@@ -159,6 +158,7 @@ export class DepartmentComponent implements OnInit {
           }
         }
         this.showSuccess('Insert new department successfully');
+        this.fetchDepartments();
       });
   }
 

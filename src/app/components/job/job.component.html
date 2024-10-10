@@ -1,41 +1,103 @@
+<style>
+  .pagination-page ::ng-deep .ngx-pagination .current {
+    background: #6610f2;
+  }
+</style>
 <div class="container-fluid">
-    <div class="row flex-nowrap">
-      <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
-        <app-header></app-header>
-      </div>
-      <div class="col py-3">
-        <div class="intro-section">
-          <h1>Department List</h1>
-          <p>List all departments</p>
+  <div class="row flex-nowrap">
+    <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 sidebar">
+      <app-header></app-header>
+    </div>
+    <div class="col py-3">
+      <div class="intro-section job-header">
+        <div class="job-title">
+          <h1>Job List</h1>
         </div>
-        <div class="search-box">
-          <input
-            type="text"
-            class="form-control search-input"
-            placeholder="Search by name department..."
-          />
+        <div class="d-flex justify-content-center gap-2 align-items-center">
+          <p class="m-0">List all jobs</p>
+          @if(isAdmin){
           <button
             type="button"
             class="btn btn-create"
             data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
+            data-bs-target="#insertModal"
           >
             <i class="fa-solid fa-plus"></i>
             Insert
           </button>
+          }
         </div>
-  <!-- Modal -->
-  <div
+      </div>
+
+      <!-- Start: Table -->
+      <div class="table-departments">
+        <table class="table table-hover">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              class="department_detail"
+              *ngFor="
+                let job of jobs
+                  | paginate : { itemsPerPage: 6, currentPage: p };
+                let i = index
+              "
+            >
+              <td>{{ (p - 1) * itemsPerPage + i + 1 }}</td>
+              <td>{{ job.job_title }}</td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-edit mr-1"
+                  data-bs-toggle="modal"
+                  data-bs-target="#editModal"
+                  (click)="handleUpdateJob(job.job_id)"
+                >
+                  <i class="fa-solid fa-pencil-alt"></i>
+                </button>
+                <button
+                (click)="handleDeleteJob(job.job_id)"
+                  type="button"
+                  class="btn btn-delete"
+                  data-bs-toggle="modal"
+                  data-bs-target="#deleteModal"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls
+          (pageChange)="p = $event"
+          class="text-center pagination-page"
+        ></pagination-controls>
+      </div>
+      <!-- End: Table -->
+    </div>
+  </div>
+</div>
+<!-- <app-footer></app-footer> -->
+
+<!--Start: Modal Insert-->
+<div
   class="modal fade"
-  id="exampleModal"
+  id="insertModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
-  >
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Insert new department</h5>
+        <h5 class="modal-title" id="exampleModalLabel">
+          Insert new department
+        </h5>
         <button
           type="button"
           class="btn-close"
@@ -43,58 +105,106 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">
+        <form [formGroup]="insertJobForm">
+          <div class="form-group">
+            <label for="jobTitle">Job Title</label>
+            <input
+              formControlName="job_title"
+              type="text"
+              class="form-control"
+              id="jobTitle"
+              placeholder="Enter job title"
+            />
+          </div>
+        </form>
+      </div>
       <div class="modal-footer">
-        <button
-          type="button"
-          class="btn btn-exit"
-          data-bs-dismiss="modal"
-        >
+        <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn">
-          Save changes
+        <button type="button" class="btn" (click)="insertJob()">Insert</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--End: Modal Insert -->
+
+<!--Start: Modal Edit -->
+<div
+  class="modal fade"
+  id="editModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit department</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="updateJobForm">
+          <div class="form-group">
+            <label for="departmentName">Job Title</label>
+            <input
+              formControlName="job_title"
+              type="text"
+              class="form-control"
+              id="jobTitle"
+              placeholder="Enter Job Title" 
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
+          Close
         </button>
+        <button type="button" class="btn"
+        (click)="updateJob(updateJobForm.value, jobId)"
+        >Update</button>
       </div>
     </div>
   </div>
-  </div>
-  
-        <div class="table-employees">
-          <table class="table table-hover">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>twitter</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+</div>
+<!--End: Modal Edit -->
+
+<!--Start: Modal Delete -->
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete department</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
-      f
+      <div class="modal-body">
+        Do you want to delete department with ID = {{ jobId }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn" (click)="deleteJob(jobId)">Delete</button>
+      </div>
     </div>
   </div>
-  <app-footer></app-footer>
-  
+</div>
+<!--End: Modal Delete -->
