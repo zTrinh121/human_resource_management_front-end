@@ -71,6 +71,7 @@
                   <i class="fa-solid fa-pencil-alt"></i>
                 </button>
                 <button
+                (click)="handleDeleteForm(department.department_id)"
                   type="button"
                   class="btn btn-delete"
                   data-bs-toggle="modal"
@@ -237,12 +238,12 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">...</div>
+      <div class="modal-body">Do you want to delete department with ID = {{departmentId}}</div>
       <div class="modal-footer">
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn">Save changes</button>
+        <button type="button" class="btn" (click)="deleteDepartment(departmentId)">Delete</button>
       </div>
     </div>
   </div>

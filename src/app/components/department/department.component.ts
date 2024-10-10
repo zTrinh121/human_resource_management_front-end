@@ -88,7 +88,7 @@ export class DepartmentComponent implements OnInit {
           }
         }
         this.showSuccess('Insert new department successfully');
-
+        this.fetchDepartments();
       });
   }
 
@@ -102,6 +102,30 @@ export class DepartmentComponent implements OnInit {
       this.initializeForm();
     });
   }
+
+  handleDeleteForm(departmentId: number): void{
+    this.departmentId=departmentId;
+  }
+
+  deleteDepartment(departmentId: number): void{
+    this.departmentService
+      .deleteDepartment(departmentId)
+      .subscribe((response) => {
+        const modalDelete = document.getElementById('deleteModal');
+        if (modalDelete) {
+          modalDelete.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.remove();
+          }
+        }
+        this.showSuccess('Delete department successfully');
+        this.fetchDepartments();
+
+      });
+  }
+
   initializeForm() {
     this.updateDepartmentForm.patchValue({
       department_name: this.department.department_name,
