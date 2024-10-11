@@ -28,7 +28,7 @@ export class JobHistoryService {
   }
 
   getJobHistoryByEmployeeIdAndDate(employeeId: number, startDate: Date, endDate: Date): Observable<any> {
-    return this.http.get( `${this.apiJobHistory}/?employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`);
+    return this.http.get( `${this.apiJobHistory}?employeeId=${employeeId}&startDate=${startDate}&endDate=${endDate}`);
   }
 
   getAllJobHistory(): Observable<any> {
@@ -44,7 +44,7 @@ export class JobHistoryService {
     jobHistoryInsertDTO: JobHistoryInsertDTO
   ): Observable<any> {
     return this.http.put(
-      `${this.apiJobHistory}/?employeeId=${jobHistoryInsertDTO.employee_id}&startDate=${jobHistoryInsertDTO.start_date}`,
+      `${this.apiJobHistory}?employeeId=${jobHistoryInsertDTO.employee_id}&startDate=${jobHistoryInsertDTO.start_date}`,
       jobHistoryInsertDTO,
       this.apiConfig
     );
@@ -52,7 +52,7 @@ export class JobHistoryService {
 
   deleteJobHistory(employeeId: number, startDate: Date): Observable<any> {
     return this.http.delete(
-      `${this.apiJobHistory}/?employeeId=${employeeId}&startDate=${startDate}`,
+      `${this.apiJobHistory}?employeeId=${employeeId}&startDate=${startDate}`,
       this.apiConfig
     );
   }

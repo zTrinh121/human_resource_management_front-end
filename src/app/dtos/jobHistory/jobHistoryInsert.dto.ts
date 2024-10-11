@@ -1,3 +1,4 @@
+
 import { IsString, IsNotEmpty, IsNumber, IsDate } from 'class-validator';
 
 export default class JobHistoryInsertDTO{
