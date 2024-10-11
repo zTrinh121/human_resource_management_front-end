@@ -13,9 +13,7 @@ import { CommonModule } from '@angular/common';
 import { EmployeeService } from '../../services/employee.service';
 import { UserService } from '../../services/user.service';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { Router } from '@angular/router';
 import DepartmentInsertDTO from '../../dtos/department/departmentInsert.dto';
-import { LoginResponse } from '../../responses/user/login.response';
 import { ToastrService } from 'ngx-toastr';
 import { map, Observable } from 'rxjs';
 
@@ -86,7 +84,7 @@ export class DepartmentComponent implements OnInit {
             backdrop.remove();
           }
         }
-        this.showSuccess('Insert new department successfully');
+        this.toastr.success('Insert new department successfully');
         this.fetchDepartments();
       });
   }
@@ -119,7 +117,7 @@ export class DepartmentComponent implements OnInit {
             backdrop.remove();
           }
         }
-        this.showSuccess('Delete department successfully');
+        this.toastr.success('Delete department successfully');
         this.fetchDepartments();
 
       });
@@ -157,13 +155,9 @@ export class DepartmentComponent implements OnInit {
             backdrop.remove();
           }
         }
-        this.showSuccess('Insert new department successfully');
+        this.toastr.success('Insert new department successfully');
         this.fetchDepartments();
       });
-  }
-
-  showSuccess(message: string) {
-    this.toastr.success(message);
   }
 
   fetchDepartments(): void {
