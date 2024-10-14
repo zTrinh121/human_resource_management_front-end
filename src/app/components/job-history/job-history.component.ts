@@ -25,7 +25,7 @@ import { map, Observable } from 'rxjs';
   selector: 'app-job-history',
   standalone: true,
   imports: [
-  HeaderComponent,
+    HeaderComponent,
     CommonModule,
     FormsModule,
     NgxPaginationModule,
@@ -65,18 +65,28 @@ export class JobHistoryComponent {
 
   jobHistoryInsertForm: FormGroup = new FormGroup({
     employee_id: new FormControl('', Validators.required),
-    job_id: new FormControl(0, Validators.required),
-    department_id: new FormControl(0, Validators.required),
-    start_date: new FormControl(Validators.required),
-    end_date: new FormControl(Validators.required),
+    job_id: new FormControl('', Validators.required),
+    department_id: new FormControl('', Validators.required),
+    start_date: new FormControl('', Validators.required),
+    end_date: new FormControl('', Validators.required),
   });
+
+  resetFormInsert() {
+    this.jobHistoryUpdateForm.patchValue({
+      employee_id: '',
+      start_date: '',
+      end_date: '',
+      job_id: '',
+      department_id: '',
+    });
+  }
 
   jobHistoryUpdateForm: FormGroup = new FormGroup({
     employee_id: new FormControl('', Validators.required),
-    job_id: new FormControl(0, Validators.required),
-    department_id: new FormControl(0, Validators.required),
-    start_date: new FormControl(Validators.required),
-    end_date: new FormControl(Validators.required),
+    job_id: new FormControl('', Validators.required),
+    department_id: new FormControl('', Validators.required),
+    start_date: new FormControl('',Validators.required),
+    end_date: new FormControl('',Validators.required),
   });
 
   getJobHistoryByEmployeeId(employeeId: number): void {
@@ -92,11 +102,13 @@ export class JobHistoryComponent {
     startDate: Date,
     endDate: Date
   ): Observable<any> {
-    return this.jobHistoryService.getJobHistoryByEmployeeIdAndDate(employeeId, startDate, endDate).pipe(
-      map((response) => {
-        this.jobHistory = response.data;
-      })
-    );
+    return this.jobHistoryService
+      .getJobHistoryByEmployeeIdAndDate(employeeId, startDate, endDate)
+      .pipe(
+        map((response) => {
+          this.jobHistory = response.data;
+        })
+      );
   }
 
   insertJobHistory() {
@@ -122,42 +134,45 @@ export class JobHistoryComponent {
           }
         }
         this.toastr.success('Insert new job history successfully');
+        this.resetFormInsert();
         this.fetchJobHistory();
       });
   }
 
-  updateJobHistory(jobHistoryInsertDTO: JobHistoryInsertDTO){
-    this.jobHistoryService.updateJobHistory(jobHistoryInsertDTO)
-    .subscribe((response) => {
-      const modalEdit = document.getElementById('editModal');
-      if (modalEdit) {
-        modalEdit.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        const backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) {
-          backdrop.remove();
+  updateJobHistory(jobHistoryInsertDTO: JobHistoryInsertDTO) {
+    this.jobHistoryService
+      .updateJobHistory(jobHistoryInsertDTO)
+      .subscribe((response) => {
+        const modalEdit = document.getElementById('editModal');
+        if (modalEdit) {
+          modalEdit.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.remove();
+          }
         }
-      }
-      this.toastr.success('Update job history successfully');
-      this.fetchJobHistory();
-    });
+        this.toastr.success('Update job history successfully');
+        this.fetchJobHistory();
+      });
   }
 
-  deleteJobHistory(employeeId: number, startDate: Date){
-    this.jobHistoryService.deleteJobHistory(employeeId, startDate)
-    .subscribe((response) => {
-      const modalDelete = document.getElementById('deleteModal');
-      if (modalDelete) {
-        modalDelete.classList.remove('show');
-        document.body.classList.remove('modal-open');
-        const backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) {
-          backdrop.remove();
+  deleteJobHistory(employeeId: number, startDate: Date) {
+    this.jobHistoryService
+      .deleteJobHistory(employeeId, startDate)
+      .subscribe((response) => {
+        const modalDelete = document.getElementById('deleteModal');
+        if (modalDelete) {
+          modalDelete.classList.remove('show');
+          document.body.classList.remove('modal-open');
+          const backdrop = document.querySelector('.modal-backdrop');
+          if (backdrop) {
+            backdrop.remove();
+          }
         }
-      }
-      this.toastr.success('Delete job history successfully');
-      this.fetchJobHistory();
-    });
+        this.toastr.success('Delete job history successfully');
+        this.fetchJobHistory();
+      });
   }
 
   handleUpdateJobHistory(employeeId: number, startDate: Date, endDate: Date) {
@@ -174,7 +189,7 @@ export class JobHistoryComponent {
     });
   }
 
-  handleDeleteJobHistory(employeeId: number, startDate: Date, endDate: Date){
+  handleDeleteJobHistory(employeeId: number, startDate: Date, endDate: Date) {
     this.getJobHistoryByEmployeeIdAndDate(
       employeeId,
       startDate,
@@ -185,8 +200,8 @@ export class JobHistoryComponent {
       this.endDate = endDate;
     });
   }
-  
-  handleDeleteForm(employeeId: number, startDate: Date){
+
+  handleDeleteForm(employeeId: number, startDate: Date) {
     this.employeeId = employeeId;
     this.startDate = startDate;
   }

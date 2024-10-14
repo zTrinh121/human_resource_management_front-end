@@ -100,7 +100,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">
-          Insert new department
+          Insert new job
         </h5>
         <button
           type="button"
@@ -120,6 +120,12 @@
               id="jobTitle"
               placeholder="Enter job title"
             />
+            <div class="text-danger text-start">
+              @if(insertJobForm.controls['job_title'].touched &&
+                insertJobForm.controls['job_title'].errors?.['required']){
+                <span>Job title is required</span>
+                }
+            </div>
           </div>
         </form>
       </div>
@@ -127,7 +133,8 @@
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="insertJob()">Insert</button>
+        <button type="button" class="btn" (click)="insertJob()"
+        [disabled]="!insertJobForm.valid">Insert</button>
       </div>
     </div>
   </div>
@@ -156,7 +163,7 @@
       <div class="modal-body">
         <form [formGroup]="updateJobForm">
           <div class="form-group">
-            <label for="departmentName">Job Title</label>
+            <label for="jobTitle">Job Title</label>
             <input
               formControlName="job_title"
               type="text"
@@ -164,6 +171,12 @@
               id="jobTitle"
               placeholder="Enter Job Title" 
             />
+            <div class="text-danger text-start">
+              @if(updateJobForm.controls['job_title'].touched &&
+                updateJobForm.controls['job_title'].errors?.['required']){
+                <span>Job title is required</span>
+                }
+            </div>
           </div>
         </form>
       </div>
@@ -173,6 +186,7 @@
         </button>
         <button type="button" class="btn"
         (click)="updateJob(updateJobForm.value, jobId)"
+        [disabled]="!updateJobForm.valid"
         >Update</button>
       </div>
     </div>

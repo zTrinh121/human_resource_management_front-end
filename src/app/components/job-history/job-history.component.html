@@ -44,7 +44,9 @@
               <th scope="col">Start Date</th>
               <th scope="col">End Date</th>
               <th scope="col">Department</th>
+              @if(isAdmin){
               <th scope="col">Action</th>
+              }
             </tr>
           </thead>
           <tbody>
@@ -52,7 +54,7 @@
               class="employee-detail"
               *ngFor="
                 let jobHistory of jobHistories
-                  | paginate : { itemsPerPage: 5, currentPage: p };
+                  | paginate : { itemsPerPage: 6, currentPage: p };
                 let i = index
               "
             >
@@ -62,13 +64,20 @@
               <td>{{ jobHistory.start_date }}</td>
               <td>{{ jobHistory.end_date }}</td>
               <td>{{ jobHistory.department_name }}</td>
+              @if(isAdmin){
               <td>
                 <button
                   type="button"
                   class="btn btn-edit mr-1"
                   data-bs-toggle="modal"
                   data-bs-target="#editModal"
-                  (click)="handleUpdateJobHistory(jobHistory.employee_id, jobHistory.start_date, jobHistory.end_date)"
+                  (click)="
+                    handleUpdateJobHistory(
+                      jobHistory.employee_id,
+                      jobHistory.start_date,
+                      jobHistory.end_date
+                    )
+                  "
                 >
                   <i class="fa-solid fa-pencil-alt"></i>
                 </button>
@@ -77,14 +86,25 @@
                   class="btn btn-delete"
                   data-bs-toggle="modal"
                   data-bs-target="#deleteModal"
-                  (click)="handleDeleteJobHistory(jobHistory.employee_id, jobHistory.start_date, jobHistory.end_date)"
+                  (click)="
+                    handleDeleteJobHistory(
+                      jobHistory.employee_id,
+                      jobHistory.start_date,
+                      jobHistory.end_date
+                    )
+                  "
                 >
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </td>
+              }
             </tr>
           </tbody>
         </table>
+        <pagination-controls
+          (pageChange)="p = $event"
+          class="text-center pagination-page"
+        ></pagination-controls>
       </div>
       <!-- End: Table -->
     </div>
@@ -129,6 +149,13 @@
                 {{ employee.first_name }} {{ employee.last_name }}
               </option>
             </select>
+
+            <div class="text-danger text-start">
+              @if(jobHistoryInsertForm.controls['employee_id'].touched &&
+              jobHistoryInsertForm.controls['employee_id'].errors?.['required']){
+              <span>Employee name is required</span>
+              }
+            </div>
           </div>
           <div class="form-group">
             <label for="startDate">Start Date</label>
@@ -139,6 +166,12 @@
               id="startDate"
               placeholder="Enter start date"
             />
+            <div class="text-danger text-start">
+              @if(jobHistoryInsertForm.controls['start_date'].touched &&
+              jobHistoryInsertForm.controls['start_date'].errors?.['required']){
+              <span>Start date is required</span>
+              }
+            </div>
           </div>
           <div class="form-group">
             <label for="endDate">End Date</label>
@@ -149,14 +182,23 @@
               id="endDate"
               placeholder="Enter end date"
             />
+
+            <div class="text-danger text-start">
+              @if(jobHistoryInsertForm.controls['end_date'].touched &&
+              jobHistoryInsertForm.controls['end_date'].errors?.['required']){
+              <span>End date is required</span>
+              }
+            </div>
           </div>
           <div class="form-group">
-            <label for="departmentName">Deparment Name</label>
+            <label for="departmentName">Department Name</label>
             <select
               class="form-control form-select department"
               formControlName="department_id"
             >
-              <option value="" selected disabled hidden>Department</option>
+              <option value="" selected disabled hidden>
+                Choose department
+              </option>
               <option
                 *ngFor="let department of departments"
                 [value]="department.department_id"
@@ -164,6 +206,12 @@
                 {{ department.department_name }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(jobHistoryInsertForm.controls['department_id'].touched &&
+              jobHistoryInsertForm.controls['department_id'].errors?.['required']){
+              <span>Deparment name is required</span>
+              }
+            </div>
           </div>
 
           <div class="form-group">
@@ -179,6 +227,12 @@
                 {{ job.job_title }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(jobHistoryInsertForm.controls['job_id'].touched &&
+              jobHistoryInsertForm.controls['job_id'].errors?.['required']){
+              <span>Job title is required</span>
+              }
+            </div>
           </div>
         </form>
       </div>
@@ -186,7 +240,12 @@
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="insertJobHistory()">
+        <button
+          type="button"
+          class="btn"
+          (click)="insertJobHistory()"
+          [disabled]="!jobHistoryInsertForm.valid"
+        >
           Insert
         </button>
       </div>
@@ -230,6 +289,12 @@
                 {{ employee.first_name }} {{ employee.last_name }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(jobHistoryUpdateForm.controls['employee_id'].touched &&
+              jobHistoryUpdateForm.controls['employee_id'].errors?.['required']){
+              <span>Employee name is required</span>
+              }
+            </div>
           </div>
           <div class="form-group">
             <label for="startDate">Start Date</label>
@@ -241,6 +306,12 @@
               readonly
               placeholder="Enter start date"
             />
+            <div class="text-danger text-start">
+              @if(jobHistoryUpdateForm.controls['start_date'].touched &&
+              jobHistoryUpdateForm.controls['start_date'].errors?.['required']){
+              <span>Start date is required</span>
+              }
+            </div>
           </div>
           <div class="form-group">
             <label for="endDate">End Date</label>
@@ -251,6 +322,12 @@
               id="endDate"
               placeholder="Enter end date"
             />
+            <div class="text-danger text-start">
+              @if(jobHistoryUpdateForm.controls['end_date'].touched &&
+              jobHistoryUpdateForm.controls['end_date'].errors?.['required']){
+              <span>End date is required</span>
+              }
+            </div>
           </div>
           <div class="form-group">
             <label for="departmentName">Deparment Name</label>
@@ -266,6 +343,12 @@
                 {{ department.department_name }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(jobHistoryUpdateForm.controls['department_id'].touched &&
+              jobHistoryUpdateForm.controls['department_id'].errors?.['required']){
+              <span>Deparment name is required</span>
+              }
+            </div>
           </div>
 
           <div class="form-group">
@@ -281,6 +364,12 @@
                 {{ job.job_title }}
               </option>
             </select>
+            <div class="text-danger text-start">
+              @if(jobHistoryUpdateForm.controls['job_id'].touched &&
+              jobHistoryUpdateForm.controls['job_id'].errors?.['required']){
+              <span>Job title is required</span>
+              }
+            </div>
           </div>
         </form>
       </div>
@@ -288,7 +377,13 @@
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="updateJobHistory(jobHistoryUpdateForm.value)">Update</button>
+        <button
+          type="button"
+          class="btn"
+          (click)="updateJobHistory(jobHistoryUpdateForm.value)"
+        >
+          Update
+        </button>
       </div>
     </div>
   </div>
@@ -314,12 +409,23 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">Do you want to delete job history with of employee has ID = {{employeeId}} has start date = {{startDate}}</div>
+      <div class="modal-body">
+        Do you want to delete job history with of employee has ID =
+        {{ employeeId }} has start date = {{ startDate }}
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="deleteJobHistory(jobHistory.employee_id, jobHistory.start_date )">Delete</button>
+        <button
+          type="button"
+          class="btn"
+          (click)="
+            deleteJobHistory(jobHistory.employee_id, jobHistory.start_date)
+          "
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>

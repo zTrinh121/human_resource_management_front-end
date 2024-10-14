@@ -151,7 +151,8 @@
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="insertDepartment()">
+        <button type="button" class="btn" (click)="insertDepartment()"
+        [disabled]="!insertDepartmentForm.valid">
           Insert
         </button>
       </div>
@@ -177,6 +178,7 @@
           class="btn-close"
           data-bs-dismiss="modal"
           aria-label="Close"
+          
         ></button>
       </div>
       <div class="modal-body">
@@ -190,6 +192,12 @@
               id="departmentName"
               placeholder="Enter department name"
             />
+            <div class="text-danger text-start">
+              @if(updateDepartmentForm.controls['department_name'].touched &&
+                updateDepartmentForm.controls['department_name'].errors?.['required']){
+                <span>Department name is required</span>
+                }
+            </div>
           </div>
           <div class="form-group">
             <label for="managerName">Manager Name</label>
@@ -222,6 +230,7 @@
           type="button"
           class="btn"
           (click)="updateDepartment(updateDepartmentForm.value, departmentId)"
+          [disabled]="!updateDepartmentForm.valid"
         >
           Update
         </button>

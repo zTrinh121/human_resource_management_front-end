@@ -139,7 +139,7 @@
               formControlName="department_id"
               class="form-control form-select department"
             >
-              <option value="" selected>Select a department</option>
+              <!-- <option value="" selected disabled hidden>Select a department</option> -->
               <option
                 *ngFor="let department of departments"
                 [value]="department.department_id"
@@ -161,7 +161,7 @@
               formControlName="job_id"
               class="form-control form-select department"
             >
-              <option value="" selected>Select a job title</option>
+              <!-- <option value="" selected>Select a job title</option> -->
               <option *ngFor="let job of jobs" [value]="job.job_id">
                 {{ job.job_title }}
               </option>
@@ -194,6 +194,7 @@
               *ngIf="isAdmin"
               type="submit"
               class="btn btn-primary btn-submit"
+              [disabled]="!employeeDetailForm.valid"
               (click)="updateEmployee(employeeDetailForm.value)"
             >
               Update

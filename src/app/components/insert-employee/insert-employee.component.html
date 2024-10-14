@@ -4,6 +4,9 @@
       <app-header></app-header>
     </div>
     <div class="col py-3">
+      <button class="btn" (click)="backClicked()">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </button>
       <div class="intro-section">
         <h1>Insert a new employee</h1>
       </div>
@@ -181,7 +184,7 @@
             type="submit"
             class="btn btn-primary btn-submit"
             (click)="insertEmployee()"
-            [disabled]="insertEmployeeForm.invalid"
+            [disabled]="!insertEmployeeForm.valid"
           >
             Submit
           </button>

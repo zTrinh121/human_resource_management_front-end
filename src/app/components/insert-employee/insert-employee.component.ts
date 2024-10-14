@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 import { HeaderComponent } from '../header/header.component';
 
@@ -41,7 +41,7 @@ export class InsertEmployeeComponent implements OnInit {
       Validators.pattern('[0-9 ]{10}'),
     ]),
     dateOfBirth: new FormControl(),
-    hireDate: new FormControl(Validators.required),
+    hireDate: new FormControl("" ,Validators.required),
     managerId: new FormControl(1, Validators.required),
     departmentId: new FormControl(1, Validators.required),
     userId: new FormControl(),
@@ -64,7 +64,8 @@ export class InsertEmployeeComponent implements OnInit {
     private jobService: JobService,
     private router: Router,
     private useService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private _location: Location,
 
   ) {
     this.naviagateRole();
@@ -130,5 +131,9 @@ export class InsertEmployeeComponent implements OnInit {
       this.toastr.error("You cannot access");
       this.router.navigate(['/employees']);
     }
+  }
+
+  backClicked() {
+    this._location.back();
   }
 }
