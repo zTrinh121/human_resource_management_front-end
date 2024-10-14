@@ -5,6 +5,7 @@ import { DepartmentService } from '../../services/department.service';
 import {
   FormControl,
   FormGroup,
+  FormGroupDirective,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -135,7 +136,7 @@ export class DepartmentComponent implements OnInit {
     manager_id: new FormControl(1, Validators.required),
   });
 
-  insertDepartment() {
+  insertDepartment(formDirective: FormGroupDirective) {
     this.formValue = this.insertDepartmentForm.value;
 
     const departmentDTO: DepartmentInsertDTO = {
@@ -156,6 +157,8 @@ export class DepartmentComponent implements OnInit {
           }
         }
         this.toastr.success('Insert new department successfully');
+        formDirective.resetForm();
+        this.insertDepartmentForm.reset();
         this.fetchDepartments();
       });
   }

@@ -134,7 +134,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="jobHistoryInsertForm">
+        <form [formGroup]="jobHistoryInsertForm" #formDirective="ngForm" >
           <div class="form-group">
             <label for="employeeName">Employee Name</label>
             <select
@@ -243,7 +243,7 @@
         <button
           type="button"
           class="btn"
-          (click)="insertJobHistory()"
+          (click)="insertJobHistory(formDirective)"
           [disabled]="!jobHistoryInsertForm.valid"
         >
           Insert

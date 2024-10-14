@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
+  FormGroupDirective,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -65,7 +66,7 @@ export class JobComponent {
     job_title: new FormControl('', Validators.required),
   });
 
-  insertJob() {
+  insertJob(formDirective: FormGroupDirective) {
     this.formValue = this.insertJobForm.value;
 
     const jobDTO: JobInsertDTO = {
@@ -82,6 +83,8 @@ export class JobComponent {
           backdrop.remove();
         }
       }
+      formDirective.resetForm();
+      this.insertJobForm.reset();
       this.toastr.success('Insert new job successfully');
       this.fetchJobs();
     });
@@ -135,6 +138,12 @@ export class JobComponent {
   initializeForm() {
     this.updateJobForm.patchValue({
       job_title: this.job?.job_title,
+    });
+  }
+
+  resetForm(){
+    this.insertJobForm.patchValue({
+      job_title: '',
     });
   }
 

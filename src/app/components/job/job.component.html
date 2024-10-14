@@ -110,7 +110,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form [formGroup]="insertJobForm">
+        <form [formGroup]="insertJobForm" #formDirective="ngForm">
           <div class="form-group">
             <label for="jobTitle">Job Title</label>
             <input
@@ -133,7 +133,7 @@
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="insertJob()"
+        <button type="button" class="btn" (click)="insertJob(formDirective)"
         [disabled]="!insertJobForm.valid">Insert</button>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {
   FormControl,
   FormGroup,
+  FormGroupDirective,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -71,22 +72,12 @@ export class JobHistoryComponent {
     end_date: new FormControl('', Validators.required),
   });
 
-  resetFormInsert() {
-    this.jobHistoryUpdateForm.patchValue({
-      employee_id: '',
-      start_date: '',
-      end_date: '',
-      job_id: '',
-      department_id: '',
-    });
-  }
-
   jobHistoryUpdateForm: FormGroup = new FormGroup({
     employee_id: new FormControl('', Validators.required),
     job_id: new FormControl('', Validators.required),
     department_id: new FormControl('', Validators.required),
-    start_date: new FormControl('',Validators.required),
-    end_date: new FormControl('',Validators.required),
+    start_date: new FormControl('', Validators.required),
+    end_date: new FormControl('', Validators.required),
   });
 
   getJobHistoryByEmployeeId(employeeId: number): void {
@@ -111,7 +102,7 @@ export class JobHistoryComponent {
       );
   }
 
-  insertJobHistory() {
+  insertJobHistory(formDirective: FormGroupDirective) {
     this.formValue = this.jobHistoryInsertForm.value;
     const jobHistory: JobHistoryInsertDTO = {
       employee_id: this.formValue.employee_id,
@@ -134,7 +125,8 @@ export class JobHistoryComponent {
           }
         }
         this.toastr.success('Insert new job history successfully');
-        this.resetFormInsert();
+        formDirective.resetForm();
+        this.jobHistoryInsertForm.reset();
         this.fetchJobHistory();
       });
   }
