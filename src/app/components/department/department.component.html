@@ -45,7 +45,9 @@
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Manager</th>
+              @if(isAdmin){
               <th scope="col">Action</th>
+              }
             </tr>
           </thead>
           <tbody>
@@ -60,26 +62,28 @@
               <td>{{ (p - 1) * itemsPerPage + i + 1 }}</td>
               <td>{{ department.department_name }}</td>
               <td>{{ department.manager_name }}</td>
-              <td>
-                <button
-                  (click)="handleUpdateForm(department.department_id)"
-                  type="button"
-                  class="btn btn-edit mr-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editModal"
-                >
-                  <i class="fa-solid fa-pencil-alt"></i>
-                </button>
-                <button
-                (click)="handleDeleteForm(department.department_id)"
-                  type="button"
-                  class="btn btn-delete"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteModal"
-                >
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </td>
+              @if(isAdmin){
+                <td>
+                  <button
+                    (click)="handleUpdateForm(department.department_id)"
+                    type="button"
+                    class="btn btn-edit mr-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal"
+                  >
+                    <i class="fa-solid fa-pencil-alt"></i>
+                  </button>
+                  <button
+                    (click)="handleDeleteForm(department.department_id)"
+                    type="button"
+                    class="btn btn-delete"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              }
             </tr>
           </tbody>
         </table>
@@ -190,14 +194,16 @@
           <div class="form-group">
             <label for="managerName">Manager Name</label>
 
-            <select class="form-control form-select department" formControlName="manager_id">
+            <select
+              class="form-control form-select department"
+              formControlName="manager_id"
+            >
               @if(department !== null){
-              <option [value]="department.manager_id" selected
-              >
+              <option [value]="department.manager_id" selected>
                 {{ department.manager_name }}
               </option>
               }
-        
+
               <option
                 *ngFor="let employee of filteredEmployees"
                 [value]="employee.employee_id"
@@ -212,7 +218,13 @@
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="updateDepartment(updateDepartmentForm.value, departmentId)">Update</button>
+        <button
+          type="button"
+          class="btn"
+          (click)="updateDepartment(updateDepartmentForm.value, departmentId)"
+        >
+          Update
+        </button>
       </div>
     </div>
   </div>
@@ -238,12 +250,20 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">Do you want to delete department with ID = {{departmentId}}</div>
+      <div class="modal-body">
+        Do you want to delete department with ID = {{ departmentId }}
+      </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-exit" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn" (click)="deleteDepartment(departmentId)">Delete</button>
+        <button
+          type="button"
+          class="btn"
+          (click)="deleteDepartment(departmentId)"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>

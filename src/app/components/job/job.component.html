@@ -36,7 +36,9 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
-              <th scope="col">Action</th>
+              @if(isAdmin){
+                <th scope="col">Action</th>
+              }
             </tr>
           </thead>
           <tbody>
@@ -50,26 +52,28 @@
             >
               <td>{{ (p - 1) * itemsPerPage + i + 1 }}</td>
               <td>{{ job.job_title }}</td>
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-edit mr-1"
-                  data-bs-toggle="modal"
-                  data-bs-target="#editModal"
-                  (click)="handleUpdateJob(job.job_id)"
-                >
-                  <i class="fa-solid fa-pencil-alt"></i>
-                </button>
-                <button
-                (click)="handleDeleteJob(job.job_id)"
-                  type="button"
-                  class="btn btn-delete"
-                  data-bs-toggle="modal"
-                  data-bs-target="#deleteModal"
-                >
-                  <i class="fa-solid fa-trash"></i>
-                </button>
-              </td>
+              @if(isAdmin){
+                <td>
+                  <button
+                    type="button"
+                    class="btn btn-edit mr-1"
+                    data-bs-toggle="modal"
+                    data-bs-target="#editModal"
+                    (click)="handleUpdateJob(job.job_id)"
+                  >
+                    <i class="fa-solid fa-pencil-alt"></i>
+                  </button>
+                  <button
+                  (click)="handleDeleteJob(job.job_id)"
+                    type="button"
+                    class="btn btn-delete"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                  >
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </td>
+              }
             </tr>
           </tbody>
         </table>

@@ -14,9 +14,13 @@ import { HeaderComponent } from '../header/header.component';
 import { EmployeeService } from '../../services/employee.service';
 import { DepartmentService } from '../../services/department.service';
 import { JobService } from '../../services/job.service';
+import { UserService } from '../../services/user.service';
+
 import { LoginResponse } from '../../responses/user/login.response';
 
 import EmployeeInsertDTO from '../../dtos/employee/employeeInsert.dto';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
   selector: 'app-insert-employee',
   standalone: true,
@@ -45,21 +49,29 @@ export class InsertEmployeeComponent implements OnInit {
     salary: new FormControl(10000, Validators.required),
   });
   formValue: any;
+  isAdmin: boolean = false;
 
   departments: any[] = [];
   jobs: any[] = [];
 
   ngOnInit(): void {
-    this.fetchDepartments();
-    this.fetchJobs();
+    
   }
 
   constructor(
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
     private jobService: JobService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private useService: UserService,
+    private toastr: ToastrService
+
+  ) {
+    this.naviagateRole();
+    this.fetchDepartments();
+    this.fetchJobs();
+
+  }
 
   fetchDepartments(): void {
     this.departmentService.getAllDepartments().subscribe({
@@ -110,5 +122,13 @@ export class InsertEmployeeComponent implements OnInit {
       //   console.log(error);
       // },
     });
+  }
+
+  naviagateRole(){
+    const role = this.useService.getRoleName();
+    if(role === "USER"){
+      this.toastr.error("You cannot access");
+      this.router.navigate(['/employees']);
+    }
   }
 }

@@ -31,6 +31,7 @@ export class LoginComponent  {
     private tokenService: TokenService,
     private formBuilder: FormBuilder
   ) {
+    this.logginedNavigate();
   }
 
   loginHandler() {
@@ -48,9 +49,14 @@ export class LoginComponent  {
         this.router.navigate(['/employees']);
       },
       complete: () => {},
-      error: (error: any) => {
-        console.log(error);
-      },
+      // error: (error: any) => {
+      //   console.log(error);
+      // },
     });
+  }
+
+  logginedNavigate(){
+    const token = this.tokenService.getToken();
+    this.router.navigate(['/employees']);
   }
 }

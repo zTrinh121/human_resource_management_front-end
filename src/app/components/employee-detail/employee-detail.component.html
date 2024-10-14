@@ -24,11 +24,11 @@
               aria-label="First name"
             />
             <div class="text-danger text-start">
-                @if(employeeDetailForm.controls['first_name'].touched &&
-                employeeDetailForm.controls['first_name'].errors?.['required']){
-                <span>First Name is required</span>
-                }
-              </div>
+              @if(employeeDetailForm.controls['first_name'].touched &&
+              employeeDetailForm.controls['first_name'].errors?.['required']){
+              <span>First Name is required</span>
+              }
+            </div>
           </div>
           <div class="col">
             <label>Last Name</label>
@@ -41,11 +41,11 @@
               aria-label="Last name"
             />
             <div class="text-danger text-start">
-                @if(employeeDetailForm.controls['last_name'].touched &&
-                employeeDetailForm.controls['last_name'].errors?.['required']){
-                <span>Last Name is required</span>
-                }
-              </div>
+              @if(employeeDetailForm.controls['last_name'].touched &&
+              employeeDetailForm.controls['last_name'].errors?.['required']){
+              <span>Last Name is required</span>
+              }
+            </div>
           </div>
         </div>
 
@@ -175,6 +175,7 @@
           </div>
         </div>
 
+        @if(isAdmin && employeeDetailForm.get('user_id') !== null){
         <div class="mb-3">
           <label>User ID</label>
           <input
@@ -185,6 +186,8 @@
             placeholder="Mapping with user account (not required)"
           />
         </div>
+        }
+
         <div class="d-flex justify-content-end">
           <div class="">
             <button
